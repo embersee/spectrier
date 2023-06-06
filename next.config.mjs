@@ -3,7 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   experimental: {
     appDir: true,
+    serverActions: true,
   },
+
   images: {
     domains: ["images.unsplash.com"],
   },
