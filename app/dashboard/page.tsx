@@ -20,9 +20,9 @@ export default async function DashboardPage() {
           Dashboard
         </h1>
         {/* <ProductForm /> */}
-        <Button variant="secondary">
-          <Link href="/dashboard/create-product">Создать</Link>
-        </Button>
+        <Link href="/dashboard/create-product">
+          <Button variant="secondary">Создать</Button>
+        </Link>
       </div>
 
       <DataTable columns={columns} data={products} />

@@ -1,7 +1,5 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,8 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { productSchema } from "@/components/table/schema";
-import { onSubmitProduct } from "@/app/dashboard/actions";
+import { ProductFormValues, productSchema } from "@/components/table/schema";
 import {
   Dialog,
   DialogContent,
@@ -24,25 +21,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { useRouter } from "next/navigation";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { updateProduct } from "@/app/dashboard/actions";
 
-type ProductFormValues = z.infer<typeof productSchema>;
-
-// const defaultValues: Partial<ProfileFormValues> = {}
-
-export default function ProductFormModal() {
+export default function EditProductForm(defaultValues: ProductFormValues) {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
-    // defaultValues,
+    defaultValues,
     mode: "onSubmit",
   });
 
   const router = useRouter();
 
   const onSubmit = (data: ProductFormValues) => {
-    onSubmitProduct(data);
+    data.id = defaultValues.id;
+    updateProduct(data);
   };
 
   const handleOnOpenChange = (open: boolean) => {
@@ -55,15 +49,28 @@ export default function ProductFormModal() {
     <Dialog open onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Добавить новый товар в магазин</DialogTitle>
+          <DialogTitle>Редактировать товар</DialogTitle>
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
-
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2 flex-col flex"
           >
+            <FormField
+              control={form.control}
+              name="id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>id</FormLabel>
+                  <FormControl>
+                    <Input {...field} readOnly />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="name"
@@ -148,6 +155,7 @@ export default function ProductFormModal() {
                 </FormItem>
               )}
             />
+
             <DialogFooter>
               <DialogClose>
                 <Button type="submit" className="self-end mt-8">

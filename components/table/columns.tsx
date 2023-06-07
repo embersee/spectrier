@@ -1,43 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
-
-// import { User } from "@prisma/client";
 import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import Link from "next/link";
-
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Cross2Icon } from "@radix-ui/react-icons";
-import toast from "react-hot-toast";
 import { Product } from "@/lib/db/schema";
 import { DataTableRowActions } from "./data-table-row-action";
-// import { Controller, useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { userSchema } from "./table-data/schema";
-// import { UserForm } from "@table/table-data/schema";
 
 export const columns: ColumnDef<Product>[] = [
   {

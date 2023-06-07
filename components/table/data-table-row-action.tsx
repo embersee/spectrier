@@ -13,12 +13,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { deleteProduct } from "@/app/dashboard/actions";
+import Link from "next/link";
 
 // import { productSchema } from "@components/table/schema"
 
-interface DataTableRowActionsProps<TData> {
-  row: Row<TData>;
-}
+// interface DataTableRowActionsProps<TData> {
+//   row: Row<TData>;
+// }
 
 export function DataTableRowActions({ id }: { id: number }) {
   return (
@@ -33,10 +34,12 @@ export function DataTableRowActions({ id }: { id: number }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem>
-          <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Edit
-        </DropdownMenuItem>
+        <Link href={`/dashboard/edit-product/${id}`}>
+          <DropdownMenuItem>
+            <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+            Edit
+          </DropdownMenuItem>
+        </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => deleteProduct(id)}>
           <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
