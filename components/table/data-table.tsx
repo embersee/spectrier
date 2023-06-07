@@ -25,8 +25,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { DataTablePagination } from "../table/data-table-pagination";
-import { DataTableToolbar } from "../table/data-table-toolbar";
+import { DataTablePagination } from "./pagination";
+import { DataTableToolbar } from "./toolbar";
 import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -111,7 +111,7 @@ export const DataTable = <TData, TValue>({
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Нету таких студентов 😱
+                  Нету таких продуктов 😱
                 </TableCell>
               </TableRow>
             )}

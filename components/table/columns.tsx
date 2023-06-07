@@ -2,11 +2,12 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DataTableColumnHeader } from "@/components/table/data-table-column-header";
-import { Product } from "@/lib/db/schema";
-import { DataTableRowActions } from "./data-table-row-action";
+import { DataTableColumnHeader } from "@/components/table/column-header";
+import { Category, Product } from "@/lib/db/schema";
+import { DataTableRowActions } from "./row-action";
+import { Badge } from "../ui/badge";
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<Product & Category>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -55,6 +56,22 @@ export const columns: ColumnDef<Product>[] = [
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue("description")}
           </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "category",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Категория" />
+    ),
+    cell: ({ row }) => {
+      const { id, name } = row.getValue("category") as Category;
+      return (
+        <div className="flex space-x-2">
+          <Badge className="max-w-[500px] truncate font-medium">
+            {name || "Без категории"}
+          </Badge>
         </div>
       );
     },

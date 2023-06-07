@@ -1,5 +1,7 @@
 "use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { ProductFormValues, productSchema } from "@/components/table/schema";
+import { productSchema } from "@/components/table/schema";
+import { onSubmitProduct } from "@/app/dashboard/actions";
 import {
   Dialog,
   DialogContent,
@@ -21,10 +24,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { updateProduct } from "@/app/dashboard/actions";
-import { Category, Product } from "@/lib/db/schema";
 
 import {
   Select,
@@ -34,31 +33,27 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export default function EditProductForm({
-  defaultValues,
+import { useRouter } from "next/navigation";
+import { DialogClose } from "@radix-ui/react-dialog";
+import { Category } from "@/lib/db/schema";
+
+type ProductFormValues = z.infer<typeof productSchema>;
+
+export default function CreateProductForm({
   categories,
 }: {
-  defaultValues: (Product & Category) | undefined;
   categories: Category[];
 }) {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
-    defaultValues: {
-      ...defaultValues,
-      category: categories
-        .find((c) => c.id == defaultValues?.categoryID)
-        ?.id.toString(),
-    },
-    mode: "onChange",
+    // defaultValues,
+    mode: "onSubmit",
   });
 
   const router = useRouter();
 
   const onSubmit = (data: ProductFormValues) => {
-    if (!defaultValues) return;
-    data.id = defaultValues.id as number;
-
-    updateProduct(data);
+    onSubmitProduct(data);
   };
 
   const handleOnOpenChange = (open: boolean) => {
@@ -71,28 +66,15 @@ export default function EditProductForm({
     <Dialog open onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Редактировать товар</DialogTitle>
+          <DialogTitle>Добавить новый товар в магазин</DialogTitle>
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2 flex-col flex"
           >
-            <FormField
-              control={form.control}
-              name="id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>id</FormLabel>
-                  <FormControl>
-                    <Input {...field} readOnly />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="name"
@@ -127,13 +109,10 @@ export default function EditProductForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Категория</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={defaultValues?.categoryID?.toString()}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Выберете..." />
+                        <SelectValue placeholder="Выберете категорию" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -205,7 +184,6 @@ export default function EditProductForm({
                 </FormItem>
               )}
             />
-
             <DialogFooter>
               <DialogClose>
                 <Button type="submit" className="self-end mt-8">

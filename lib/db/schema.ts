@@ -44,4 +44,5 @@ export const productRelations = relations(product, ({ one }) => ({
 }));
 
 export type Product = InferModel<typeof product>;
+export type Category = InferModel<typeof category>;
 export type NewProduct = InferModel<typeof product, "insert">;

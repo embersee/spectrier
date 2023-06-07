@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { product } from "@/lib/db/schema";
+import { category, product } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
 import { NewProduct } from "@/lib/db/schema";
 import { ProductFormValues, productForm } from "@/components/table/schema";
@@ -11,6 +11,7 @@ export async function onSubmitProduct(data: productForm) {
   const NewProduct: NewProduct = {
     name: data.name,
     description: data.description,
+    categoryID: Number(data.category),
     price: data.price,
     discount: data.discount,
     stock: data.stock,
@@ -35,17 +36,22 @@ export async function deleteProduct(id: number) {
 
 export async function getProduct(id: number) {
   const getItem = async (id: number) => {
-    const query = await db
-      .select()
-      .from(product)
-      .where(eq(product.id, id))
-      .limit(1);
+    const query = await db.query.product.findFirst({
+      where: eq(product.id, id),
+      with: {
+        category: true,
+      },
+    });
     return query;
   };
 
   const res = await getItem(id);
 
-  return res[0];
+  return res;
+}
+
+export async function getCategories() {
+  return await db.select().from(category);
 }
 
 export async function updateProduct(data: ProductFormValues) {
@@ -53,6 +59,7 @@ export async function updateProduct(data: ProductFormValues) {
     id: data.id,
     name: data.name,
     description: data.description,
+    categoryID: Number(data.category),
     price: data.price,
     discount: data.discount,
     stock: data.stock,
@@ -60,7 +67,7 @@ export async function updateProduct(data: ProductFormValues) {
     updatedAt: new Date().toString(),
   };
 
-  const updateProduct = async (id: number, data: productForm) => {
+  const updateProduct = async (id: number, data: NewProduct) => {
     await db
       .update(product)
       .set(data)
