@@ -71,7 +71,7 @@ export default function ProductFormModal() {
                 <FormItem>
                   <FormLabel>Название товара</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -85,7 +85,7 @@ export default function ProductFormModal() {
                 <FormItem>
                   <FormLabel>Описание товара</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -99,7 +99,7 @@ export default function ProductFormModal() {
                 <FormItem>
                   <FormLabel>Цена</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="shadcn" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -113,7 +113,7 @@ export default function ProductFormModal() {
                 <FormItem>
                   <FormLabel>Дисконт</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="shadcn" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -127,7 +127,7 @@ export default function ProductFormModal() {
                 <FormItem>
                   <FormLabel>Кол. на складе</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="shadcn" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -141,7 +141,7 @@ export default function ProductFormModal() {
                 <FormItem>
                   <FormLabel>Картинка</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input {...field} />
                   </FormControl>
 
                   <FormMessage />

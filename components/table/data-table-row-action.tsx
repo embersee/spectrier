@@ -1,22 +1,18 @@
 "use client";
 
 import { Row } from "@tanstack/react-table";
-import { Copy, MoreHorizontal, Pen, Star, Tags, Trash } from "lucide-react";
+import { MoreHorizontal, Pen, Trash } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { deleteProduct } from "@/app/dashboard/actions";
 
 // import { productSchema } from "@components/table/schema"
 
@@ -24,9 +20,7 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
 }
 
-export function DataTableRowActions<TData>({
-  row,
-}: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions({ id }: { id: number }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,16 +37,8 @@ export function DataTableRowActions<TData>({
           <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
           Edit
         </DropdownMenuItem>
-        {/* <DropdownMenuItem>
-          <Copy className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Make a copy
-        </DropdownMenuItem>
-        <DropdownMenuItem>
-          <Star className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Favorite
-        </DropdownMenuItem> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => deleteProduct(id)}>
           <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>

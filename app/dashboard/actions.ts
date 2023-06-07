@@ -5,6 +5,7 @@ import { product } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
 import { NewProduct } from "@/lib/db/schema";
 import { productForm } from "@/components/table/schema";
+import { eq } from "drizzle-orm";
 
 export async function onSubmitProduct(data: productForm) {
   "use server";
@@ -27,4 +28,17 @@ export async function onSubmitProduct(data: productForm) {
   };
 
   await insertProduct(NewProduct);
+}
+
+export async function deleteProduct(id: number) {
+  "use server";
+
+  const deleteItem = async (id: number) => {
+    return db
+      .delete(product)
+      .where(eq(product.id, id))
+      .then(() => revalidatePath("/dashboard"));
+  };
+
+  await deleteItem(id);
 }
