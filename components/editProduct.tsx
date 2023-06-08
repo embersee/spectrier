@@ -59,6 +59,7 @@ export default function EditProductForm({
     data.id = defaultValues.id as number;
 
     updateProduct(data);
+    //TODO: Check if you do a .then(router.back()) here but remove the <DialogClose/> component
   };
 
   const handleOnOpenChange = (open: boolean) => {

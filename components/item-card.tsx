@@ -8,11 +8,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { BellRing } from "lucide-react";
 
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
-import { Product } from "@/lib/db/schema";
+import { Products } from "@/types/products";
+import { useCartStore } from "@/lib/store";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -21,8 +21,10 @@ export function ItemCard({
   product,
 }: {
   className?: CardProps;
-  product: Product;
+  product: Products;
 }) {
+  const addToCart = useCartStore((state) => state.addToCart);
+
   return (
     <Card className={cn("w-full", className)}>
       <CardContent className="grid gap-4 p-2">
@@ -35,12 +37,20 @@ export function ItemCard({
           />
         </AspectRatio>
       </CardContent>
-      <CardHeader className="p-2 pb-0">
+      <CardHeader className="p-2 pb-0 flex">
         <CardTitle>{product.name}</CardTitle>
-        <CardDescription>{product.description}</CardDescription>
+        <h3>${product.price}</h3>
       </CardHeader>
       <CardFooter className="p-2">
-        <Button className="w-full">Add</Button>
+        <Button
+          className="w-full"
+          onClick={() => {
+            console.log("click");
+            addToCart(product);
+          }}
+        >
+          Add
+        </Button>
       </CardFooter>
     </Card>
   );

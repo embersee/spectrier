@@ -6,20 +6,6 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/table/view-options";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue,
-// } from "./ui/select";
-// import { api } from "@/utils/api";
-// import { Checkbox } from "./ui/checkbox";
-// import { Label } from "./ui/label";
-// import { Separator } from "./ui/separator";
-
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }

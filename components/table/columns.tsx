@@ -6,8 +6,9 @@ import { DataTableColumnHeader } from "@/components/table/column-header";
 import { Category, Product } from "@/lib/db/schema";
 import { DataTableRowActions } from "./row-action";
 import { Badge } from "../ui/badge";
+import { Products } from "@/types/products";
 
-export const columns: ColumnDef<Product & Category>[] = [
+export const columns: ColumnDef<Products>[] = [
   {
     id: "select",
     header: ({ table }) => (

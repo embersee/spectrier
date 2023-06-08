@@ -1,6 +1,5 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
-import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
@@ -26,22 +25,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DashboardLayout({
-  children,
-  modal,
-}: DashboardLayoutProps) {
+export default function WebAppLayout({ children, cart }: WebAppLayoutProps) {
   return (
     <>
-      <SiteHeader />
-      <div className="flex-1">
-        {children}
-        {modal}
-      </div>
+      {children}
+      {cart}
     </>
   );
 }
 
-interface DashboardLayoutProps {
+interface WebAppLayoutProps {
   children: React.ReactNode;
-  modal: React.ReactNode;
+  cart: React.ReactNode;
 }
