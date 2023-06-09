@@ -36,6 +36,7 @@ import {
 import { useRouter } from "next/navigation";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Category } from "@/lib/db/schema";
+import { useState, useTransition } from "react";
 
 type ProductFormValues = z.infer<typeof productSchema>;
 
@@ -47,23 +48,29 @@ export default function CreateProductForm({
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     // defaultValues,
-    mode: "onSubmit",
+    mode: "onChange",
   });
 
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(true);
 
   const onSubmit = (data: ProductFormValues) => {
-    onSubmitProduct(data);
+    startTransition(() =>
+      onSubmitProduct(data)
+        .then(() => router.push("/dashboard"))
+        .then(() => setIsOpen(false))
+    );
   };
 
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {
-      router.back();
+      setIsOpen(false);
     }
   };
 
   return (
-    <Dialog open onOpenChange={handleOnOpenChange}>
+    <Dialog open={isOpen} onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Добавить новый товар в магазин</DialogTitle>
@@ -185,11 +192,9 @@ export default function CreateProductForm({
               )}
             />
             <DialogFooter>
-              <DialogClose>
-                <Button type="submit" className="self-end mt-8">
-                  Submit
-                </Button>
-              </DialogClose>
+              <Button type="submit" className="self-end mt-8">
+                {isPending ? "Pending" : "Submit"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

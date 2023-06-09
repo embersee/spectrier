@@ -22,7 +22,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { updateProduct } from "@/app/dashboard/actions";
 import { Category, Product } from "@/lib/db/schema";
 
@@ -33,6 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useState, useTransition } from "react";
 
 export default function EditProductForm({
   defaultValues,
@@ -53,28 +53,34 @@ export default function EditProductForm({
   });
 
   const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [isOpen, setIsOpen] = useState(true);
 
   const onSubmit = (data: ProductFormValues) => {
     if (!defaultValues) return;
     data.id = defaultValues.id as number;
 
-    updateProduct(data);
-    //TODO: Check if you do a .then(router.back()) here but remove the <DialogClose/> component
+    startTransition(() =>
+      updateProduct(data)
+        .then(() => router.push("/dashboard"))
+        .then(() => setIsOpen(false))
+    );
   };
 
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {
-      router.back();
+      setIsOpen(false);
     }
   };
 
   return (
-    <Dialog open onOpenChange={handleOnOpenChange}>
+    <Dialog open={isOpen} onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Редактировать товар</DialogTitle>
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -208,11 +214,9 @@ export default function EditProductForm({
             />
 
             <DialogFooter>
-              <DialogClose>
-                <Button type="submit" className="self-end mt-8">
-                  Submit
-                </Button>
-              </DialogClose>
+              <Button type="submit" className="self-end mt-8">
+                {isPending ? "Pending" : "Submit"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>

@@ -1,5 +1,3 @@
-"use server";
-
 import { columns } from "@/components/table/columns";
 import { DataTable } from "@/components/table/data-table";
 import { Button } from "@/components/ui/button";
@@ -29,3 +27,5 @@ export default async function DashboardPage() {
     </section>
   );
 }
+
+export const revalidate = 0;
