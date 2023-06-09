@@ -58,14 +58,15 @@ export default function CreateProductForm({
   const onSubmit = (data: ProductFormValues) => {
     startTransition(() =>
       onSubmitProduct(data)
-        .then(() => router.push("/dashboard"))
         .then(() => setIsOpen(false))
+        .then(() => router.push("/dashboard"))
     );
   };
 
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {
       setIsOpen(false);
+      router.back();
     }
   };
 

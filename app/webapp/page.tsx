@@ -19,15 +19,8 @@ export default async function WebAppPage() {
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
           Shop
         </h1>
-        {/* <Link href="/webapp/(.)cart"> */}
-        <div className="flex space-x-2">
-          <CartView />
-          <Link href="/webapp/cart">
-            <Button>Cart</Button>
-          </Link>
-        </div>
 
-        {/* </Link> */}
+        <CartView />
       </div>
       <SelectCategory />
       <Catalog products={products} />

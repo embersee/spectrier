@@ -13,6 +13,9 @@ import { AspectRatio } from "./ui/aspect-ratio";
 import { Button } from "./ui/button";
 import { Products } from "@/types/products";
 import { useCartStore } from "@/lib/store";
+import { Badge } from "./ui/badge";
+import { MinusIcon, PlusIcon } from "lucide-react";
+import { useState } from "react";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -23,11 +26,27 @@ export function ItemCard({
   className?: CardProps;
   product: Products;
 }) {
+  const [effect, setEffect] = useState(false);
+
   const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const cart = useCartStore((state) => state.cart);
+
+  const cartItem = cart.find((item) => item.id === product.id);
 
   return (
-    <Card className={cn("w-full", className)}>
+    <Card className={cn("w-full relative", className)}>
       <CardContent className="grid gap-4 p-2">
+        {cartItem && (
+          <Badge
+            className={`${
+              effect && "animate-in zoom-in-110"
+            } absolute top-0 right-0 z-50 text-lg shadow-2xl`}
+            onAnimationEnd={() => setEffect(false)}
+          >
+            {cartItem.quantity}
+          </Badge>
+        )}
         <AspectRatio ratio={3 / 4} className="bg-muted">
           <Image
             src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
@@ -41,16 +60,38 @@ export function ItemCard({
         <CardTitle>{product.name}</CardTitle>
         <h3>${product.price}</h3>
       </CardHeader>
-      <CardFooter className="p-2">
-        <Button
-          className="w-full"
-          onClick={() => {
-            console.log("click");
-            addToCart(product);
-          }}
-        >
-          Add
-        </Button>
+      <CardFooter className="p-2 space-x-2">
+        {cart.some((value) => value.id == product.id) ? (
+          <>
+            <Button
+              className="w-full"
+              onClick={() => {
+                setEffect(true);
+                removeFromCart(product);
+              }}
+            >
+              <MinusIcon />
+            </Button>
+            <Button
+              className="w-full"
+              onClick={() => {
+                setEffect(true);
+                addToCart(product);
+              }}
+            >
+              <PlusIcon />
+            </Button>
+          </>
+        ) : (
+          <Button
+            className="w-full"
+            onClick={() => {
+              addToCart(product);
+            }}
+          >
+            Add
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

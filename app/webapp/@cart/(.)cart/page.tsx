@@ -24,7 +24,7 @@ export default async function CartPage() {
 
   return (
     <Dialog open onOpenChange={handleOnOpenChange}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] w-[350px] mt-10">
         <DialogHeader>
           <DialogTitle>Cart</DialogTitle>
           <DialogDescription>

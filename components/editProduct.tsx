@@ -70,6 +70,7 @@ export default function EditProductForm({
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {
       setIsOpen(false);
+      router.back();
     }
   };
 
