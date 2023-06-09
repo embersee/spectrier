@@ -10,8 +10,6 @@ export const productSchema = z.object({
   discount: z.coerce.number().min(0),
   stock: z.coerce.number().min(1),
   image: z.string(),
-  // createdAt: z.date(),
-  // updatedAt: z.date(),
 });
 
 export const productUpdateSchema = z.object({
@@ -27,5 +25,5 @@ export const productUpdateSchema = z.object({
   image: z.string(),
 });
 
-export type ProductFormValues = z.infer<typeof productUpdateSchema>;
-export type productForm = z.infer<typeof productSchema>;
+export type ProductFormUpdate = z.infer<typeof productUpdateSchema>;
+export type ProductForm = z.infer<typeof productSchema>;

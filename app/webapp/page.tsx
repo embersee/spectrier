@@ -1,5 +1,5 @@
-import { CartView } from "@/components/cart-view";
-import Catalog from "@/components/catalog";
+import { CartView } from "@/app/webapp/cart-view";
+import Catalog from "@/app/webapp/catalog";
 import { SelectCategory } from "@/components/select-category";
 import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";

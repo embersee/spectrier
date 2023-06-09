@@ -1,6 +1,6 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { ProductFormValues, productSchema } from "@/components/table/schema";
+import { ProductFormUpdate, productSchema } from "@/types/form-schema";
 import {
   Dialog,
   DialogContent,
@@ -41,7 +41,7 @@ export default function EditProductForm({
   defaultValues: (Product & Category) | undefined;
   categories: Category[];
 }) {
-  const form = useForm<ProductFormValues>({
+  const form = useForm<ProductFormUpdate>({
     resolver: zodResolver(productSchema),
     defaultValues: {
       ...defaultValues,
@@ -56,7 +56,7 @@ export default function EditProductForm({
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(true);
 
-  const onSubmit = (data: ProductFormValues) => {
+  const onSubmit = (data: ProductFormUpdate) => {
     if (!defaultValues) return;
     data.id = defaultValues.id as number;
 

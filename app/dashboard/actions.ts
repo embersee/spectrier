@@ -4,10 +4,10 @@ import { db } from "@/lib/db";
 import { category, product } from "@/lib/db/schema";
 import { revalidatePath } from "next/cache";
 import { NewProduct } from "@/lib/db/schema";
-import { ProductFormValues, productForm } from "@/components/table/schema";
+import { ProductForm, ProductFormUpdate } from "@/types/form-schema";
 import { eq } from "drizzle-orm";
 
-export async function onSubmitProduct(data: productForm) {
+export async function onSubmitProduct(data: ProductForm) {
   const NewProduct: NewProduct = {
     name: data.name,
     description: data.description,
@@ -54,7 +54,7 @@ export async function getCategories() {
   return await db.select().from(category);
 }
 
-export async function updateProduct(data: ProductFormValues) {
+export async function updateProduct(data: ProductFormUpdate) {
   const Product: NewProduct = {
     id: data.id,
     name: data.name,

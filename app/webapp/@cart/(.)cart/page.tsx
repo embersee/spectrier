@@ -11,10 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { useCartStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default async function CartPage() {
   const cart = useCartStore((state) => state.cart);
   const router = useRouter();
+
+  useEffect(() => {
+    if (window == undefined) return;
+    Telegram.WebApp.BackButton.show();
+    Telegram.WebApp.BackButton.onClick(() => router.back());
+  }, []);
 
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {

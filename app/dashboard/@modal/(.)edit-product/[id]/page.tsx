@@ -1,18 +1,16 @@
-"use server";
-
 import { getCategories, getProduct } from "@/app/dashboard/actions";
-import EditProductForm from "@/components/editProduct";
+import EditProductForm from "@/app/dashboard/edit-product";
 
-interface EditProductFormModalProps {
+interface EditProductModalProps {
   params: {
     id: string;
   };
 }
 
-const EditProductFormModal = async ({ params }: EditProductFormModalProps) => {
+const EditProductModal = async ({ params }: EditProductModalProps) => {
   const res = await getProduct(Number(params.id));
   const categories = await getCategories();
   return <EditProductForm defaultValues={res} categories={categories} />;
 };
 
-export default EditProductFormModal;
+export default EditProductModal;

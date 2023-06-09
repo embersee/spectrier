@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { AspectRatio } from "./ui/aspect-ratio";
-import { Button } from "./ui/button";
+import { AspectRatio } from "../../components/ui/aspect-ratio";
+import { Button } from "../../components/ui/button";
 import { Products } from "@/types/products";
 import { useCartStore } from "@/lib/store";
-import { Badge } from "./ui/badge";
+import { Badge } from "../../components/ui/badge";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 

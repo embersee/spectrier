@@ -39,7 +39,7 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("name")}
           </span>
         </div>
@@ -54,7 +54,7 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("description")}
           </span>
         </div>
@@ -70,7 +70,7 @@ export const columns: ColumnDef<Products>[] = [
       const { id, name } = row.getValue("category") as Category;
       return (
         <div className="flex space-x-2">
-          <Badge className="max-w-[500px] truncate font-medium">
+          <Badge className="max-w-[200px] truncate font-medium">
             {name || "Без категории"}
           </Badge>
         </div>
@@ -85,7 +85,7 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("price")}
           </span>
         </div>
@@ -100,7 +100,7 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("discount")}
           </span>
         </div>
@@ -115,7 +115,7 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue("stock")}
           </span>
         </div>
@@ -130,8 +130,8 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {(row.getValue("createdAt") as Date).toDateString()}
+          <span className="max-w-[200px] truncate font-medium">
+            {(row.getValue("createdAt") as Date).toLocaleString("ru-RU")}
           </span>
         </div>
       );
@@ -147,8 +147,8 @@ export const columns: ColumnDef<Products>[] = [
 
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">
-            {updatedAt ? updatedAt.toDateString() : "Не обновлялся"}
+          <span className="max-w-[200px] truncate font-medium">
+            {updatedAt ? updatedAt.toLocaleString("ru-RU") : "Не обновлялся"}
           </span>
         </div>
       );

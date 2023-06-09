@@ -13,6 +13,9 @@ export default function Catalog({ products }: CatalogProps) {
   useEffect(() => {
     if (window == undefined) return;
     Telegram.WebApp.ready();
+
+    //hide the back button whenever youre in the catalog
+    Telegram.WebApp.BackButton.hide();
   }, []);
 
   return (

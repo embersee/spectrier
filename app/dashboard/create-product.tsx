@@ -1,8 +1,6 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { productSchema } from "@/components/table/schema";
+import { ProductForm, productSchema } from "@/types/form-schema";
 import { onSubmitProduct } from "@/app/dashboard/actions";
 import {
   Dialog,
@@ -34,18 +32,15 @@ import {
 } from "@/components/ui/select";
 
 import { useRouter } from "next/navigation";
-import { DialogClose } from "@radix-ui/react-dialog";
 import { Category } from "@/lib/db/schema";
 import { useState, useTransition } from "react";
-
-type ProductFormValues = z.infer<typeof productSchema>;
 
 export default function CreateProductForm({
   categories,
 }: {
   categories: Category[];
 }) {
-  const form = useForm<ProductFormValues>({
+  const form = useForm<ProductForm>({
     resolver: zodResolver(productSchema),
     // defaultValues,
     mode: "onChange",
@@ -55,7 +50,7 @@ export default function CreateProductForm({
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(true);
 
-  const onSubmit = (data: ProductFormValues) => {
+  const onSubmit = (data: ProductForm) => {
     startTransition(() =>
       onSubmitProduct(data)
         .then(() => setIsOpen(false))
