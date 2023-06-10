@@ -131,7 +131,7 @@ export const columns: ColumnDef<Products>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            {(row.getValue("createdAt") as Date).toLocaleString("ru-RU")}
+            {(row.getValue("createdAt") as Date).toLocaleDateString("ru-RU")}
           </span>
         </div>
       );
@@ -148,7 +148,9 @@ export const columns: ColumnDef<Products>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            {updatedAt ? updatedAt.toLocaleString("ru-RU") : "Не обновлялся"}
+            {updatedAt
+              ? updatedAt.toLocaleDateString("ru-RU")
+              : "Не обновлялся"}
           </span>
         </div>
       );

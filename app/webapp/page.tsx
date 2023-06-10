@@ -1,10 +1,8 @@
 import { CartView } from "@/app/webapp/cart-view";
 import Catalog from "@/app/webapp/catalog";
-import { SelectCategory } from "@/components/select-category";
-import { Button } from "@/components/ui/button";
 import { db } from "@/lib/db";
 import { Products } from "@/types/products";
-import Link from "next/link";
+import { getCategories } from "./actions";
 
 export default async function WebAppPage() {
   const products = (await db.query.product.findMany({
@@ -12,6 +10,8 @@ export default async function WebAppPage() {
       category: true,
     },
   })) as Products[];
+
+  const categories = await getCategories();
 
   return (
     <section className="m-2 grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -22,8 +22,7 @@ export default async function WebAppPage() {
 
         <CartView />
       </div>
-      <SelectCategory />
-      <Catalog products={products} />
+      <Catalog products={products} categories={categories} />
     </section>
   );
 }
