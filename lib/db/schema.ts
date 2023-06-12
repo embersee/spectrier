@@ -71,6 +71,7 @@ export const order = pgTable("order", {
   address: text("address"),
   paymentType: paymentTypeEnum("paymenttype"),
   paymentStatus: paymentStatusEnum("paymentstatus"),
+  totalSum: integer("totalSum"),
 });
 
 export const userRelations = relations(user, ({ many }) => ({

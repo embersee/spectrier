@@ -49,6 +49,7 @@ export async function sendInvoiceToSupport(
           address: "empty",
           paymentType: "support",
           paymentStatus: "incomplete",
+          totalSum,
         };
 
         const newOrder = await insertOrder(NewOrder);
@@ -76,6 +77,7 @@ export async function sendInvoiceToSupport(
           address: "empty",
           paymentType: "support",
           paymentStatus: "incomplete",
+          totalSum,
         };
 
         const newOrder = await insertOrder(NewOrder);
