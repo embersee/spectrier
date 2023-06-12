@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { ProductForm, productSchema } from "@/types/form-schema";
-import { onSubmitProduct } from "@/app/dashboard/actions";
+import { ProductFormUpdate, productSchema } from "@/types/form-schema";
 import {
   Dialog,
   DialogContent,
@@ -22,6 +21,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
+import { updateProduct } from "@/app/dashboard/products/actions";
+import { Category, Product } from "@/lib/db/schema";
 
 import {
   Select,
@@ -30,19 +32,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-import { useRouter } from "next/navigation";
-import { Category } from "@/lib/db/schema";
 import { useState, useTransition } from "react";
 
-export default function CreateProductForm({
+export default function EditProductForm({
+  defaultValues,
   categories,
 }: {
+  defaultValues: (Product & Category) | undefined;
   categories: Category[];
 }) {
-  const form = useForm<ProductForm>({
+  const form = useForm<ProductFormUpdate>({
     resolver: zodResolver(productSchema),
-    // defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      category: categories
+        .find((c) => c.id == defaultValues?.categoryID)
+        ?.id.toString(),
+    },
     mode: "onChange",
   });
 
@@ -50,11 +56,14 @@ export default function CreateProductForm({
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(true);
 
-  const onSubmit = (data: ProductForm) => {
+  const onSubmit = (data: ProductFormUpdate) => {
+    if (!defaultValues) return;
+    data.id = defaultValues.id as number;
+
     startTransition(() =>
-      onSubmitProduct(data)
+      updateProduct(data)
+        .then(() => router.push("/dashboard/products"))
         .then(() => setIsOpen(false))
-        .then(() => router.push("/dashboard"))
     );
   };
 
@@ -69,7 +78,7 @@ export default function CreateProductForm({
     <Dialog open={isOpen} onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Добавить новый товар в магазин</DialogTitle>
+          <DialogTitle>Редактировать товар</DialogTitle>
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
 
@@ -78,6 +87,20 @@ export default function CreateProductForm({
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2 flex-col flex"
           >
+            <FormField
+              control={form.control}
+              name="id"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>id</FormLabel>
+                  <FormControl>
+                    <Input {...field} readOnly />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="name"
@@ -112,10 +135,13 @@ export default function CreateProductForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Категория</FormLabel>
-                  <Select onValueChange={field.onChange}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={defaultValues?.categoryID?.toString()}
+                  >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Выберете категорию" />
+                        <SelectValue placeholder="Выберете..." />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -187,6 +213,7 @@ export default function CreateProductForm({
                 </FormItem>
               )}
             />
+
             <DialogFooter>
               <Button type="submit" className="self-end mt-8">
                 {isPending ? "Pending" : "Submit"}

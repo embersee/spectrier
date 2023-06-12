@@ -11,7 +11,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { deleteProduct } from "@/app/dashboard/actions";
+import { deleteProduct } from "@/app/dashboard/products/actions";
 import Link from "next/link";
 
 // import { productSchema } from "@components/table/schema"
@@ -33,7 +33,7 @@ export function DataTableRowActions({ id }: { id: number }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <Link href={`/dashboard/edit-product/${id}`}>
+        <Link href={`/dashboard/products/edit-product/${id}`}>
           <DropdownMenuItem>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
             Edit

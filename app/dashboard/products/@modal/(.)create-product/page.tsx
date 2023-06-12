@@ -1,5 +1,5 @@
-import { getCategories, getProduct } from "@/app/dashboard/actions";
-import CreateProductForm from "@/app/dashboard/create-product";
+import { getCategories, getProduct } from "@/app/dashboard/products/actions";
+import CreateProductForm from "@/app/dashboard/products/create-product";
 
 const CreateProductModal = async () => {
   const categories = await getCategories();

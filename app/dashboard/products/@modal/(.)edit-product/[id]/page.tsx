@@ -1,5 +1,5 @@
-import { getCategories, getProduct } from "@/app/dashboard/actions";
-import EditProductForm from "@/app/dashboard/edit-product";
+import { getCategories, getProduct } from "@/app/dashboard/products/actions";
+import EditProductForm from "@/app/dashboard/products/edit-product";
 
 interface EditProductModalProps {
   params: {

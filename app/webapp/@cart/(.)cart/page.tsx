@@ -16,6 +16,7 @@ import CartItem from "@/app/webapp/cart-item";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { sendInvoiceToSupport } from "../../actions";
+import { NewUser, User } from "@/lib/db/schema";
 
 export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
@@ -42,11 +43,13 @@ export default function CartPage() {
   };
 
   const submitInvoiceToSupport = () => {
-    const userId = (
-      Telegram.WebApp.initDataUnsafe.user?.id as number
-    ).toString();
+    const user: NewUser = {
+      name: Telegram.WebApp.initDataUnsafe.user?.first_name as string,
+      telegramId: Telegram.WebApp.initDataUnsafe.user?.id.toString() as string,
+      username: Telegram.WebApp.initDataUnsafe.user?.username as string,
+    };
 
-    sendInvoiceToSupport(userId, cart, totalSum, comment);
+    sendInvoiceToSupport(cart, totalSum, comment, user);
 
     Telegram.WebApp.close();
   };

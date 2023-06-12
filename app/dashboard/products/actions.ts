@@ -23,7 +23,9 @@ export async function onSubmitProduct(data: ProductForm) {
     return db.insert(product).values(p);
   };
 
-  await insertProduct(NewProduct).then(() => revalidatePath("/dashboard"));
+  await insertProduct(NewProduct).then(() =>
+    revalidatePath("/dashboard/products")
+  );
 }
 
 export async function deleteProduct(id: number) {
@@ -31,7 +33,7 @@ export async function deleteProduct(id: number) {
     return db.delete(product).where(eq(product.id, id));
   };
 
-  await deleteItem(id).then(() => revalidatePath("/dashboard"));
+  await deleteItem(id).then(() => revalidatePath("/dashboard/products"));
 }
 
 export async function getProduct(id: number) {
@@ -72,7 +74,7 @@ export async function updateProduct(data: ProductFormUpdate) {
       .update(product)
       .set(data)
       .where(eq(product.id, id))
-      .then(() => revalidatePath("/dashboard"));
+      .then(() => revalidatePath("/dashboard/products"));
   };
 
   await updateProduct(data.id, Product);

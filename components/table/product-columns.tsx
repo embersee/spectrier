@@ -8,7 +8,7 @@ import { DataTableRowActions } from "./row-action";
 import { Badge } from "../ui/badge";
 import { Products } from "@/types/products";
 
-export const columns: ColumnDef<Products>[] = [
+export const productColumns: ColumnDef<Products>[] = [
   {
     id: "select",
     header: ({ table }) => (

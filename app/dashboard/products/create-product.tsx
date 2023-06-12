@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { ProductFormUpdate, productSchema } from "@/types/form-schema";
+import { ProductForm, productSchema } from "@/types/form-schema";
+import { onSubmitProduct } from "@/app/dashboard/products/actions";
 import {
   Dialog,
   DialogContent,
@@ -21,9 +22,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
-import { updateProduct } from "@/app/dashboard/actions";
-import { Category, Product } from "@/lib/db/schema";
 
 import {
   Select,
@@ -32,23 +30,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { useRouter } from "next/navigation";
+import { Category } from "@/lib/db/schema";
 import { useState, useTransition } from "react";
 
-export default function EditProductForm({
-  defaultValues,
+export default function CreateProductForm({
   categories,
 }: {
-  defaultValues: (Product & Category) | undefined;
   categories: Category[];
 }) {
-  const form = useForm<ProductFormUpdate>({
+  const form = useForm<ProductForm>({
     resolver: zodResolver(productSchema),
-    defaultValues: {
-      ...defaultValues,
-      category: categories
-        .find((c) => c.id == defaultValues?.categoryID)
-        ?.id.toString(),
-    },
+    // defaultValues,
     mode: "onChange",
   });
 
@@ -56,14 +50,11 @@ export default function EditProductForm({
   const [isPending, startTransition] = useTransition();
   const [isOpen, setIsOpen] = useState(true);
 
-  const onSubmit = (data: ProductFormUpdate) => {
-    if (!defaultValues) return;
-    data.id = defaultValues.id as number;
-
+  const onSubmit = (data: ProductForm) => {
     startTransition(() =>
-      updateProduct(data)
-        .then(() => router.push("/dashboard"))
+      onSubmitProduct(data)
         .then(() => setIsOpen(false))
+        .then(() => router.push("/dashboard/products"))
     );
   };
 
@@ -78,7 +69,7 @@ export default function EditProductForm({
     <Dialog open={isOpen} onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Редактировать товар</DialogTitle>
+          <DialogTitle>Добавить новый товар в магазин</DialogTitle>
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
 
@@ -87,20 +78,6 @@ export default function EditProductForm({
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2 flex-col flex"
           >
-            <FormField
-              control={form.control}
-              name="id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>id</FormLabel>
-                  <FormControl>
-                    <Input {...field} readOnly />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
             <FormField
               control={form.control}
               name="name"
@@ -135,13 +112,10 @@ export default function EditProductForm({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Категория</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={defaultValues?.categoryID?.toString()}
-                  >
+                  <Select onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Выберете..." />
+                        <SelectValue placeholder="Выберете категорию" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -213,7 +187,6 @@ export default function EditProductForm({
                 </FormItem>
               )}
             />
-
             <DialogFooter>
               <Button type="submit" className="self-end mt-8">
                 {isPending ? "Pending" : "Submit"}

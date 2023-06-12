@@ -64,7 +64,7 @@ export const paymentStatusEnum = pgEnum("paymentstatus", [
 
 export const order = pgTable("order", {
   id: serial("id").primaryKey(),
-  userId: integer("userId"),
+  userId: integer("userId").references(() => user.id),
   createdAt: date("createdAt").defaultNow(),
   comment: text("comment"),
   orderStatus: orderStatusEnum("orderstatus"),
@@ -93,6 +93,7 @@ export const productsToOrders = pgTable(
     productId: integer("productId")
       .notNull()
       .references(() => product.id),
+    quantity: integer("quantity"),
   },
   (t) => ({
     pk: primaryKey(t.orderId, t.productId),
@@ -121,6 +122,16 @@ export const productOrderRelations = relations(product, ({ many }) => ({
   productsToOrders: many(productsToOrders),
 }));
 
-export type Product = InferModel<typeof product>;
+export type User = InferModel<typeof user>;
+export type NewUser = InferModel<typeof user, "insert">;
+
 export type Category = InferModel<typeof category>;
+
+export type Product = InferModel<typeof product>;
 export type NewProduct = InferModel<typeof product, "insert">;
+
+export type Order = InferModel<typeof order>;
+export type NewOrder = InferModel<typeof order, "insert">;
+
+export type ProductsToOrders = InferModel<typeof productsToOrders>;
+export type NewProductsToOrders = InferModel<typeof productsToOrders, "insert">;

@@ -8,3 +8,7 @@ export interface storeProduct extends Product {
   quantity?: number;
   category: Category;
 }
+
+export interface orderProduct extends Product {
+  quantity: number;
+}
