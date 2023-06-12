@@ -159,7 +159,7 @@ export const orderColumns: ColumnDef<Orders>[] = [
 		),
 		cell: ({ row }) => {
 			return (
-				<div className="space-y-2 whitespace-nowrap w-52 ">
+				<div className="space-y-2 whitespace-nowrap w-32 ">
 					<div className="flex justify-between px-1">
 						<p className=" truncate font-medium">Название</p>
 						<p className=" truncate font-medium">Кол.</p>
