@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -16,13 +15,14 @@ import CartItem from "@/app/webapp/cart-item";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { sendInvoiceToSupport } from "../../actions";
-import { NewUser, User } from "@/lib/db/schema";
+import { NewUser} from "@/lib/db/schema";
 
 export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
   const router = useRouter();
 
   const [comment, setComment] = useState("");
+  const [address, setAddress] = useState("");
 
   const totalSum = cart
     .map((p) => p.price * (p.quantity as number))
@@ -49,7 +49,7 @@ export default function CartPage() {
       username: Telegram.WebApp.initDataUnsafe.user?.username as string,
     };
 
-    sendInvoiceToSupport(cart, totalSum, comment, user);
+    sendInvoiceToSupport(cart, totalSum, comment, address, user);
 
     Telegram.WebApp.close();
   };
@@ -81,6 +81,14 @@ export default function CartPage() {
           />
           <p className="text-sm text-muted-foreground">
             Any special requests, details etc.
+          </p>
+          <Input
+            placeholder="Address"
+            value={address}
+            onChange={(value) => setAddress(value.currentTarget.value)}
+          />
+          <p className="text-sm text-muted-foreground">
+            Введите адрес доставки...
           </p>
         </div>
         <div className="space-y-2">

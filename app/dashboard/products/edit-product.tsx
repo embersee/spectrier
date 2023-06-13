@@ -62,8 +62,8 @@ export default function EditProductForm({
 
     startTransition(() =>
       updateProduct(data)
-        .then(() => router.push("/dashboard/products"))
         .then(() => setIsOpen(false))
+        .then(() => router.push("/dashboard/products"))
     );
   };
 

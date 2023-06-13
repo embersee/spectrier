@@ -22,6 +22,7 @@ export async function sendInvoiceToSupport(
 	cart: storeProduct[],
 	totalSum: number,
 	comment: string,
+  address: string,
 	userValues: NewUser
 ) {
 	const userExists = await db.query.user.findFirst({
@@ -30,7 +31,7 @@ export async function sendInvoiceToSupport(
 
 	const sendMessageToUser = async () => {
 		const items = cart
-			.map((item, i) => `${item.quantity} x ${item.name} – ${item.price}\n`)
+			.map((item) => `${item.quantity} x ${item.name} – ${item.price}\n`)
 			.join("")
 
 		const message = `*Ваш Заказ:*
@@ -41,6 +42,11 @@ ${
 	comment &&
 	`––––––––––––––
 *Ваш комментарий:* ${comment}`
+}
+${
+  address && 
+`––––––––––––––
+*Адрес доставки:* ${address}`
 }`
 
 		const res = await SendTelegram(
@@ -58,7 +64,7 @@ ${
 					userId: userExists.id,
 					comment: comment,
 					orderStatus: "created",
-					address: "empty",
+					address: address, 
 					paymentType: "support",
 					paymentStatus: "incomplete",
 					totalSum,
@@ -86,7 +92,7 @@ ${
 					userId: newUser[0].userId,
 					comment: comment,
 					orderStatus: "created",
-					address: "empty",
+					address: address, 
 					paymentType: "support",
 					paymentStatus: "incomplete",
 					totalSum,
