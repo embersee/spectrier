@@ -1,13 +1,19 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { category, product } from "@/lib/db/schema";
-import { revalidatePath } from "next/cache";
-import { NewProduct } from "@/lib/db/schema";
+import { NewProduct, category, product } from "@/lib/db/schema";
 import { ProductForm, ProductFormUpdate } from "@/types/form-schema";
+import { Products } from "@/types/products";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
-export async function onSubmitProduct(data: ProductForm) {
+interface ProductInput extends ProductForm {
+  imageOne: string | undefined;
+  imageTwo: string | undefined;
+  imageThree: string | undefined;
+}
+
+export async function onSubmitProduct(data: ProductInput) {
   const NewProduct: NewProduct = {
     name: data.name,
     description: data.description,
@@ -15,7 +21,9 @@ export async function onSubmitProduct(data: ProductForm) {
     price: data.price,
     discount: data.discount,
     stock: data.stock,
-    image: data.image,
+    imageOne: data.imageOne || "",
+    imageTwo: data.imageTwo,
+    imageThree: data.imageThree,
     createdAt: new Date().toString(),
   };
 
@@ -65,7 +73,9 @@ export async function updateProduct(data: ProductFormUpdate) {
     price: data.price,
     discount: data.discount,
     stock: data.stock,
-    image: data.image,
+    imageOne: data.imageOne || "",
+    imageTwo: data.imageTwo,
+    imageThree: data.imageThree,
     updatedAt: new Date().toString(),
   };
 

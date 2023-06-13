@@ -1,7 +1,15 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { onSubmitProduct } from "@/app/dashboard/products/actions";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -11,17 +19,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useForm } from "react-hook-form";
 import { ProductForm, productSchema } from "@/types/form-schema";
-import { onSubmitProduct } from "@/app/dashboard/products/actions";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 import {
   Select,
@@ -31,15 +31,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { useRouter } from "next/navigation";
 import { Category } from "@/lib/db/schema";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+
+import Upload from "@/components/upload";
+import Image from "next/image";
 
 export default function CreateProductForm({
   categories,
 }: {
   categories: Category[];
 }) {
+  const [images, setImages] = useState<
+    {
+      fileUrl: string;
+      fileKey: string;
+    }[]
+  >([]);
+
   const form = useForm<ProductForm>({
     resolver: zodResolver(productSchema),
     // defaultValues,
@@ -51,8 +61,14 @@ export default function CreateProductForm({
   const [isOpen, setIsOpen] = useState(true);
 
   const onSubmit = (data: ProductForm) => {
+    const NewData = {
+      ...data,
+      imageOne: images.at(0)?.fileUrl,
+      imageTwo: images.at(1)?.fileUrl,
+      imageThree: images.at(2)?.fileUrl,
+    };
     startTransition(() =>
-      onSubmitProduct(data)
+      onSubmitProduct(NewData)
         .then(() => setIsOpen(false))
         .then(() => router.push("/dashboard/products"))
     );
@@ -72,6 +88,22 @@ export default function CreateProductForm({
           <DialogTitle>Добавить новый товар в магазин</DialogTitle>
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
+
+        {images.length <= 0 && <Upload setImages={setImages} />}
+        <div className="flex space-x-2 justify-center items-center ">
+          {images.map((image, i) => (
+            <div key={i}>
+              <Image
+                src={image.fileUrl}
+                alt=""
+                height={100}
+                width={100}
+                className="rounded-md object-cover"
+              />
+              <p> Картинка {i + 1}</p>
+            </div>
+          ))}
+        </div>
 
         <Form {...form}>
           <form
@@ -167,20 +199,6 @@ export default function CreateProductForm({
                   <FormLabel>Кол. на складе</FormLabel>
                   <FormControl>
                     <Input type="number" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Картинка</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
                   </FormControl>
 
                   <FormMessage />

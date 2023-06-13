@@ -2,7 +2,6 @@ import Image from "next/image";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -16,6 +15,7 @@ import { useCartStore } from "@/lib/store";
 import { Badge } from "../../components/ui/badge";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -28,6 +28,8 @@ export function ItemCard({
 }) {
   const [effect, setEffect] = useState(false);
 
+  const router = useRouter();
+
   const addToCart = useCartStore((state) => state.addToCart);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const cart = useCartStore((state) => state.cart);
@@ -36,7 +38,10 @@ export function ItemCard({
 
   return (
     <Card className={cn("w-full relative", className)}>
-      <CardContent className="grid gap-4 p-2">
+      <CardContent
+        className="grid gap-4 p-2"
+        onClick={() => router.push(`/webapp/preview/${product.id}`)}
+      >
         {cartItem && (
           <Badge
             className={`${
@@ -49,10 +54,15 @@ export function ItemCard({
         )}
         <AspectRatio ratio={3 / 4} className="bg-muted">
           <Image
-            src="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=800&dpr=2&q=80"
-            alt="Photo by Drew Beamer"
+            src={
+              product.imageOne.length > 0
+                ? product.imageOne
+                : `https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=80&dpr=2&q=20`
+            }
+            alt={product.name}
             fill
             className="rounded-md object-cover"
+            blurDataURL="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=80&dpr=2&q=20"
           />
         </AspectRatio>
       </CardContent>

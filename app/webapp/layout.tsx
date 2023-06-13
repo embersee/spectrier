@@ -25,11 +25,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WebAppLayout({ children, cart }: WebAppLayoutProps) {
+export default function WebAppLayout({ children, cart, preview }: WebAppLayoutProps) {
   return (
     <>
       {children}
       {cart}
+      {preview}
     </>
   );
 }
@@ -37,4 +38,5 @@ export default function WebAppLayout({ children, cart }: WebAppLayoutProps) {
 interface WebAppLayoutProps {
   children: React.ReactNode;
   cart: React.ReactNode;
+  preview: React.ReactNode;
 }

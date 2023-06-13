@@ -59,6 +59,9 @@ export default function EditProductForm({
   const onSubmit = (data: ProductFormUpdate) => {
     if (!defaultValues) return;
     data.id = defaultValues.id as number;
+    data.imageOne = defaultValues.imageOne;
+    data.imageTwo = defaultValues.imageTwo;
+    data.imageThree = defaultValues.imageThree;
 
     startTransition(() =>
       updateProduct(data)
@@ -199,14 +202,15 @@ export default function EditProductForm({
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="image"
+              name="imageOne"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Картинка</FormLabel>
+                  <FormLabel>Картинка 1</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} readOnly />
                   </FormControl>
 
                   <FormMessage />

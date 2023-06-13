@@ -9,7 +9,6 @@ export const productSchema = z.object({
   price: z.coerce.number().min(1),
   discount: z.coerce.number().min(0),
   stock: z.coerce.number().min(1),
-  image: z.string(),
 });
 
 export const productUpdateSchema = z.object({
@@ -22,7 +21,9 @@ export const productUpdateSchema = z.object({
   price: z.coerce.number().min(1),
   discount: z.coerce.number().min(0),
   stock: z.coerce.number().min(1),
-  image: z.string(),
+  imageOne: z.string(),
+  imageTwo: z.string().nullish().default(""),
+  imageThree: z.string().nullish().default(""),
 });
 
 export type ProductFormUpdate = z.infer<typeof productUpdateSchema>;
