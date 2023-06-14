@@ -15,7 +15,7 @@ import CartItem from "@/app/webapp/cart-item";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { sendInvoiceToSupport } from "../../actions";
-import { NewUser} from "@/lib/db/schema";
+import { NewUser } from "@/lib/db/schema";
 
 export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
@@ -34,7 +34,7 @@ export default function CartPage() {
     Telegram.WebApp.BackButton.onClick(() => router.back());
 
     Telegram.WebApp.MainButton.hide();
-  }, []);
+  }, [router]);
 
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {

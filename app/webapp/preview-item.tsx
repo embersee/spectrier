@@ -8,14 +8,10 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import Image from "next/image";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
 
 export default function PreviewItem({
   product,
@@ -30,7 +26,7 @@ export default function PreviewItem({
     Telegram.WebApp.BackButton.onClick(() => router.back());
 
     Telegram.WebApp.MainButton.hide();
-  }, []);
+  }, [router]);
 
   const handleOnOpenChange = (open: boolean) => {
     if (!open) {
@@ -38,16 +34,14 @@ export default function PreviewItem({
     }
   };
 
-  if (product === undefined) return <p>error</p>;
-
   function filterNullValues<T>(array: (T | null)[]): T[] {
     return array.filter((item) => item !== null) as T[];
   }
 
   const images = filterNullValues([
-    product.imageOne,
-    product.imageTwo,
-    product.imageThree,
+    product?.imageOne,
+    product?.imageTwo,
+    product?.imageThree,
   ]);
   const [next, setNext] = useState(0);
 
@@ -61,7 +55,7 @@ export default function PreviewItem({
           <AspectRatio ratio={3 / 4} className="bg-muted relative ">
             <Image
               src={images.at(next) || ""}
-              alt={product.name}
+              alt={product?.name || ""}
               fill
               className="rounded-md object-cover select-none"
               blurDataURL="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=80&dpr=2&q=20"
@@ -79,7 +73,7 @@ export default function PreviewItem({
                   {product?.description}
                 </DialogDescription>
                 <p className=" text-left">
-                  Осталось на складе: {product.stock}
+                  Осталось на складе: {product?.stock}
                 </p>
 
                 <p className="text-sm text-muted-foreground text-left">

@@ -22,7 +22,7 @@ export function CartView() {
     } else {
       Telegram.WebApp.MainButton.hide();
     }
-  }, [totalItems]);
+  }, [totalItems, router]);
 
   const clickCart = () => {
     if (!totalItems) {
