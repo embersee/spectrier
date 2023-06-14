@@ -36,7 +36,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <Script src="https://telegram.org/js/telegram-web-app.js"></Script>
+          <script src="https://telegram.org/js/telegram-web-app.js" defer />
         </head>
         {/* <StoreInitializer /> */}
         {/* FIXME: if zustand fails uncomment this ^^^ */}
