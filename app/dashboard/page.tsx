@@ -1,4 +1,18 @@
+"use server";
+
+import { redirect, useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { OPTIONS } from "@/app/api/auth/[...nextauth]/route";
+
 export default async function DashboardPage() {
+  const session = await getServerSession(OPTIONS);
+
+  const adminIds = process.env.ADMIN_ID as string;
+
+  if (!adminIds.includes(session?.user?.id as string)) {
+    redirect("/");
+  }
   return (
     <>
       <div className="flex space-x-4">
@@ -14,5 +28,3 @@ export default async function DashboardPage() {
     </>
   );
 }
-
-export const revalidate = 0;

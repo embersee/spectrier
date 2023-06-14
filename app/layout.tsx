@@ -6,8 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
-import { StoreInitializer } from "@/components/store-initializer";
-import Script from "next/script";
+import Provider from "@/components/provider";
 
 export const metadata: Metadata = {
   title: {
@@ -47,7 +46,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         >
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <div className="relative flex min-h-screen flex-col">
-              <div className="flex-1">{children}</div>
+              <Provider>
+                <div className="flex-1">{children}</div>
+              </Provider>
             </div>
             <TailwindIndicator />
           </ThemeProvider>
