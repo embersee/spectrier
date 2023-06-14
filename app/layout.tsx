@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { StoreInitializer } from "@/components/store-initializer";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <script src="https://telegram.org/js/telegram-web-app.js"></script>
+          <Script src="https://telegram.org/js/telegram-web-app.js"></Script>
         </head>
         {/* <StoreInitializer /> */}
         {/* FIXME: if zustand fails uncomment this ^^^ */}
