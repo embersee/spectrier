@@ -63,7 +63,7 @@ export default function PreviewItem({
             {/* <Badge className="absolute bottom-0 z-50 text-lg shadow-2xl">
               Изображение {next + 1}
             </Badge> */}
-            <div className="absolute bottom-0 z-50 w-full pt-10 mx-4 bg-gradient-to-t from-black">
+            <div className="absolute bottom-0 z-50 w-full pt-10 bg-gradient-to-t from-black">
               <div className="flex flex-col justify-end mt-10 bg-gradient-to-t p-4 from-black">
                 <div className="flex justify-between text-2xl">
                   <p>{product?.name}</p>

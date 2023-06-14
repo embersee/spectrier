@@ -89,8 +89,8 @@ export default function CreateProductForm({
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
 
-        {images.length <= 0 && <Upload setImages={setImages} />}
         <div className="flex space-x-2 justify-center items-center ">
+          {images.length <= 0 && <Upload setImages={setImages} />}
           {images.map((image, i) => (
             <div key={i}>
               <Image
