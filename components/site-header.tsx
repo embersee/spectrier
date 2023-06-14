@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { getServerSession } from "next-auth";
 import { OPTIONS } from "@/app/api/auth/[...nextauth]/route";
 
+import SignOut from "./sign-out";
+
 export async function SiteHeader() {
   const session = await getServerSession(OPTIONS);
 
@@ -24,6 +26,7 @@ export async function SiteHeader() {
                 {session?.user.name?.substring(0, 2).toUpperCase()}
               </AvatarFallback>
             </Avatar>
+            <SignOut />
             <ThemeToggle />
           </nav>
         </div>

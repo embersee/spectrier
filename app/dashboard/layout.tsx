@@ -2,12 +2,22 @@ import { SiteHeader } from "@/components/site-header";
 
 import Navigation from "./nav";
 
-export const revalidate = 60; // revalidate this page every 60 seconds
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { OPTIONS } from "@/app/api/auth/[...nextauth]/route";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
   modal,
 }: DashboardLayoutProps) {
+  const session = await getServerSession(OPTIONS);
+
+  const adminIds = process.env.ADMIN_ID as string;
+
+  if (!adminIds.includes(session?.user?.id as string)) {
+    redirect("/");
+  }
+
   return (
     <>
       <SiteHeader />
