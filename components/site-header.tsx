@@ -1,13 +1,13 @@
-"use client";
-
 import { MainNav } from "@/components/main-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/config/site";
-import { useSession } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-export function SiteHeader() {
-  const { data: session } = useSession();
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { getServerSession } from "next-auth";
+import { OPTIONS } from "@/app/api/auth/[...nextauth]/route";
+
+export async function SiteHeader() {
+  const session = await getServerSession(OPTIONS);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">

@@ -69,8 +69,12 @@ export default function CreateProductForm({
     };
     startTransition(() =>
       onSubmitProduct(NewData)
+        .then(() =>
+          router.push("/dashboard/products", {
+            forceOptimisticNavigation: true,
+          })
+        )
         .then(() => setIsOpen(false))
-        .then(() => router.push("/dashboard/products"))
     );
   };
 
@@ -206,7 +210,11 @@ export default function CreateProductForm({
               )}
             />
             <DialogFooter>
-              <Button type="submit" className="self-end mt-8">
+              <Button
+                type="submit"
+                className="self-end mt-8"
+                disabled={isPending}
+              >
                 {isPending ? "Pending" : "Submit"}
               </Button>
             </DialogFooter>

@@ -65,8 +65,8 @@ export default function EditProductForm({
 
     startTransition(() =>
       updateProduct(data)
-        .then(() => setIsOpen(false))
         .then(() => router.push("/dashboard/products"))
+        .then(() => setIsOpen(false))
     );
   };
 
@@ -219,7 +219,11 @@ export default function EditProductForm({
             />
 
             <DialogFooter>
-              <Button type="submit" className="self-end mt-8">
+              <Button
+                type="submit"
+                className="self-end mt-8"
+                disabled={isPending}
+              >
                 {isPending ? "Pending" : "Submit"}
               </Button>
             </DialogFooter>
