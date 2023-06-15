@@ -49,9 +49,9 @@ export default function CartPage() {
       username: Telegram.WebApp.initDataUnsafe.user?.username as string,
     };
 
-    sendInvoiceToSupport(cart, totalSum, comment, address, user);
-
-    Telegram.WebApp.close();
+    sendInvoiceToSupport({ cart, totalSum, comment, address, user }).then(() =>
+      Telegram.WebApp.close()
+    );
   };
 
   return (
