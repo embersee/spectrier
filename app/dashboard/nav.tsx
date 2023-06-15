@@ -31,13 +31,13 @@ export default function Navigation() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/dashboard/posts" legacyBehavior passHref>
+        {/* <NavigationMenuItem>
+          <Link href="/dashboard/posts" legacyBehavior passHref >
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Посты
             </NavigationMenuLink>
           </Link>
-        </NavigationMenuItem>
+        </NavigationMenuItem> */}
       </NavigationMenuList>
     </NavigationMenu>
   );

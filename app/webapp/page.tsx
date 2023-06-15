@@ -17,7 +17,7 @@ export default async function WebAppPage() {
     <section className="m-2 grid items-center gap-6 pb-8 pt-6 md:py-10">
       <div className="flex space-x-4 justify-between">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          Shop
+          Каталог
         </h1>
 
         <CartView />

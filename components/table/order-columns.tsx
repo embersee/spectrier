@@ -155,7 +155,7 @@ export const orderColumns: ColumnDef<Orders>[] = [
   {
     accessorKey: "product",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Product" />
+      <DataTableColumnHeader column={column} title="Заказ" />
     ),
     cell: ({ row }) => {
       return (

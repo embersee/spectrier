@@ -34,7 +34,7 @@ export const productColumns: ColumnDef<Products>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="Назавние" />
     ),
     cell: ({ row }) => {
       return (
@@ -49,7 +49,7 @@ export const productColumns: ColumnDef<Products>[] = [
   {
     accessorKey: "description",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Description" />
+      <DataTableColumnHeader column={column} title="Описание" />
     ),
     cell: ({ row }) => {
       return (

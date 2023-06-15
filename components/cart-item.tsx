@@ -7,7 +7,7 @@ export default function CartItem(item: storeProduct) {
         <p>{item.quantity}x</p>
         <p>{item.name}</p>
       </div>
-      <p>${item.price}</p>
+      <p>{item.price} ₽</p>
     </div>
   );
 }

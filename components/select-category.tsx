@@ -25,9 +25,9 @@ export function SelectCategory({
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Categories</SelectLabel>
+          <SelectLabel>Категории</SelectLabel>
           <Separator />
-          <SelectItem value="">All products</SelectItem>
+          <SelectItem value="">Все товары</SelectItem>
           {categories.map((c, i) => (
             <SelectItem key={i} value={c.name}>
               {c.name}

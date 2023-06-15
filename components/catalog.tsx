@@ -33,7 +33,7 @@ export default function Catalog({ products, categories }: CatalogProps) {
   return (
     <div className="space-y-2">
       <p>
-        Viewing {filteredProducts.length} out of {products.length}
+        Найдено {filteredProducts.length} из {products.length} товаров
       </p>
       <SelectCategory categories={categories} setSelected={setSelected} />
       <div className="grid gap-2 grid-cols-2">
