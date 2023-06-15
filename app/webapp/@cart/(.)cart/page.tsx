@@ -50,7 +50,10 @@ export default function CartPage() {
     };
 
     sendInvoiceToSupport({ cart, totalSum, comment, address, user }).then(() =>
-      Telegram.WebApp.close()
+      Telegram.WebApp.showAlert(
+        "Ваш заказ был создан! Ожидаете связи консультанта.",
+        () => Telegram.WebApp.close()
+      )
     );
   };
 
