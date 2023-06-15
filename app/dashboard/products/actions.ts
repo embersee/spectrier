@@ -3,7 +3,6 @@
 import { db } from "@/lib/db";
 import { NewProduct, category, product } from "@/lib/db/schema";
 import { ProductForm, ProductFormUpdate } from "@/types/form-schema";
-import { Products } from "@/types/products";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 

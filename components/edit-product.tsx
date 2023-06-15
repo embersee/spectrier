@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/select";
 import { useState, useTransition } from "react";
 
-export default function EditProductForm({
+export default function EditForm({
   defaultValues,
   categories,
 }: {

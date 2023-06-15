@@ -3,7 +3,7 @@
 import { useCartStore } from "@/lib/store";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "../../components/ui/button";
+import { Button } from "./ui/button";
 import { ShoppingCartIcon } from "lucide-react";
 import { useShowPopup } from "@vkruglikov/react-telegram-web-app";
 

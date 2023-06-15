@@ -8,11 +8,11 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-import { AspectRatio } from "../../components/ui/aspect-ratio";
-import { Button } from "../../components/ui/button";
+import { AspectRatio } from "./ui/aspect-ratio";
+import { Button } from "./ui/button";
 import { Products } from "@/types/products";
 import { useCartStore } from "@/lib/store";
-import { Badge } from "../../components/ui/badge";
+import { Badge } from "./ui/badge";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";

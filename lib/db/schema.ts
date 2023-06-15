@@ -139,15 +139,3 @@ export type NewOrder = InferModel<typeof order, "insert">;
 
 export type ProductsToOrders = InferModel<typeof productsToOrders>;
 export type NewProductsToOrders = InferModel<typeof productsToOrders, "insert">;
-
-export const insertUser = async (u: NewUser) => {
-  return await db.insert(user).values(u).returning({ userId: user.id });
-};
-
-export const insertOrder = async (o: NewOrder) => {
-  return await db.insert(order).values(o).returning({ orderId: order.id });
-};
-
-export const insertProductsToOrder = async (cart: NewProductsToOrders[]) => {
-  return await db.insert(productsToOrders).values(cart).returning();
-};

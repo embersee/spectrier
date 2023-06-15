@@ -11,7 +11,7 @@ import {
 import { useCartStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import CartItem from "@/app/webapp/cart-item";
+import CartItem from "@/components/cart-item";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { sendInvoiceToSupport } from "../../actions";

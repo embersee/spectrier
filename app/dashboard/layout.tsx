@@ -8,7 +8,6 @@ import { OPTIONS } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function DashboardLayout({
   children,
-  modal,
 }: DashboardLayoutProps) {
   const session = await getServerSession(OPTIONS);
 
@@ -21,11 +20,9 @@ export default async function DashboardLayout({
   return (
     <>
       <SiteHeader />
-
       <div className="flex-1">
         <div className="container grid items-center gap-6 ">
           <Navigation />
-          {modal}
           {children}
         </div>
       </div>
@@ -35,5 +32,4 @@ export default async function DashboardLayout({
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
-  modal: React.ReactNode;
 }

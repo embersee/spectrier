@@ -1,7 +1,5 @@
 import { getProduct } from "@/app/dashboard/products/actions";
-import PreviewItem from "@/app/webapp/preview-item";
-import { db } from "@/lib/db";
-import { Category, Product } from "@/lib/db/schema";
+import PreviewItem from "@/components/preview-item";
 
 interface PreviewModalProps {
   params: {

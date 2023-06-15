@@ -1,5 +1,5 @@
-import { CartView } from "@/app/webapp/cart-view";
-import Catalog from "@/app/webapp/catalog";
+import { CartView } from "@/components/cart-view";
+import Catalog from "@/components/catalog";
 import { db } from "@/lib/db";
 import { Products } from "@/types/products";
 import { getCategories } from "./actions";

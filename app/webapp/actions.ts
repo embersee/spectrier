@@ -6,13 +6,12 @@ import {
   NewProductsToOrders,
   NewUser,
   category,
-  insertProductsToOrder,
-  insertUser,
+  order,
+  productsToOrders,
+  user,
 } from "@/lib/db/schema";
 import { SendTelegram } from "@/lib/sendTelegram";
 import { storeProduct } from "@/types/products";
-
-import { insertOrder } from "@/lib/db/schema";
 
 export async function getCategories() {
   return await db.select().from(category);
@@ -31,13 +30,55 @@ export async function sendInvoiceToSupport({
   totalSum,
   comment,
   address,
-  user,
+  user: userObj,
 }: InvoiceToSupportProps) {
   const userExists = await db.query.user.findFirst({
-    where: (users, { eq }) => eq(users.telegramId, user.telegramId),
+    where: (users, { eq }) => eq(users.telegramId, userObj.telegramId),
   });
 
-  if (userExists) {
+  if (!userExists) {
+    await db
+      .transaction(async (tx) => {
+        const NewUser = userObj as NewUser;
+
+        // Create new user
+        const newUser = await tx
+          .insert(user)
+          .values(NewUser)
+          .returning({ userId: user.id });
+
+        const NewOrder: NewOrder = {
+          userId: newUser[0].userId,
+          comment: comment,
+          orderStatus: "created",
+          address: address,
+          paymentType: "support",
+          paymentStatus: "incomplete",
+          totalSum,
+        };
+
+        // New order transaction
+        const newOrder = await tx
+          .insert(order)
+          .values(NewOrder)
+          .returning({ orderId: order.id });
+
+        const NewProductsToOrders: NewProductsToOrders[] = cart.map((v) => ({
+          orderId: newOrder[0].orderId,
+          productId: v.id,
+          quantity: v.quantity,
+        }));
+
+        // New productToOrder many-to-many connection
+        await tx
+          .insert(productsToOrders)
+          .values(NewProductsToOrders)
+          .returning();
+      })
+      .then(() => {
+        sendMessageToUser({ cart, totalSum, comment, address, user: userObj });
+      });
+  } else {
     await db
       .transaction(async (tx) => {
         const NewOrder: NewOrder = {
@@ -50,7 +91,11 @@ export async function sendInvoiceToSupport({
           totalSum,
         };
 
-        const newOrder = await insertOrder(NewOrder);
+        // New order transaction
+        const newOrder = await tx
+          .insert(order)
+          .values(NewOrder)
+          .returning({ orderId: order.id });
 
         const NewProductsToOrders: NewProductsToOrders[] = cart.map((v) => ({
           orderId: newOrder[0].orderId,
@@ -58,50 +103,24 @@ export async function sendInvoiceToSupport({
           quantity: v.quantity,
         }));
 
-        await insertProductsToOrder(NewProductsToOrders);
+        // New productToOrder many-to-many connection
+        await tx
+          .insert(productsToOrders)
+          .values(NewProductsToOrders)
+          .returning();
       })
       .then(() => {
-        sendMessageToUser({ cart, totalSum, comment, address, user });
-      });
-  } else {
-    await db
-      .transaction(async (tx) => {
-        const newUser = await insertUser(user);
-
-        const NewOrder: NewOrder = {
-          userId: newUser[0].userId,
-          comment: comment,
-          orderStatus: "created",
-          address: address,
-          paymentType: "support",
-          paymentStatus: "incomplete",
-          totalSum,
-        };
-
-        const newOrder = await insertOrder(NewOrder);
-
-        const NewProductsToOrders: NewProductsToOrders[] = cart.map((v) => ({
-          orderId: newOrder[0].orderId,
-          productId: v.id,
-          quantity: v.quantity,
-        }));
-
-        const newProductsToOrder = await insertProductsToOrder(
-          NewProductsToOrders
-        );
-      })
-      .then(() => {
-        sendMessageToUser({ cart, totalSum, comment, address, user });
+        sendMessageToUser({ cart, totalSum, comment, address, user: userObj });
       });
   }
 }
 
 const sendMessageToUser = async ({
   cart,
-  user,
   totalSum,
   comment,
   address,
+  user,
 }: InvoiceToSupportProps) => {
   const items = cart
     .map((item) => `${item.quantity} x ${item.name} – ${item.price}\n`)
