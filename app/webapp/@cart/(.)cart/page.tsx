@@ -65,12 +65,6 @@ export default function CartPage() {
   return (
     <Dialog open onOpenChange={handleOnOpenChange}>
       <DialogContent className="sm:max-w-[425px] mt-10 mx-10">
-        <DialogHeader>
-          <DialogTitle>Корзина</DialogTitle>
-          <DialogDescription>
-            Чтобы внести изменения в корзину, вернитесь в каталог!
-          </DialogDescription>
-        </DialogHeader>
         <div className="grid gap-2 py-4">
           <p className="text-lg font-bold">ВАШ ЗАКАЗ</p>
           {cart.map((item) => (

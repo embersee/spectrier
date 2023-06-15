@@ -65,7 +65,10 @@ export default function EditForm({
 
     startTransition(() =>
       updateProduct(data)
-        .then(() => router.push("/dashboard/products"))
+        .then(() => {
+          router.refresh();
+          router.push("/dashboard/products");
+        })
         .then(() => setIsOpen(false))
     );
   };

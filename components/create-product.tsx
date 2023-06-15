@@ -69,11 +69,10 @@ export default function CreateProductForm({
     };
     startTransition(() =>
       onSubmitProduct(NewData)
-        .then(() =>
-          router.push("/dashboard/products", {
-            forceOptimisticNavigation: true,
-          })
-        )
+        .then(() => {
+          router.refresh();
+          router.push("/dashboard/products");
+        })
         .then(() => setIsOpen(false))
     );
   };

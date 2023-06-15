@@ -28,4 +28,5 @@ export default async function ProductsPage() {
   );
 }
 
+export const dynamic = "force-dynamic";
 export const revalidate = 0;
