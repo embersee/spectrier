@@ -84,7 +84,7 @@ export default function PreviewItem({
               alt={product?.name || ""}
               fill
               className="rounded-md object-cover select-none"
-              blurDataURL="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=80&dpr=2&q=20"
+              priority
             />
 
             <div className="absolute bottom-0 z-50 w-full pt-10 bg-gradient-to-t from-black">

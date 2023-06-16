@@ -52,7 +52,7 @@ export function ItemCard({
             {cartItem.quantity}
           </Badge>
         )}
-        <AspectRatio ratio={3 / 4} className="bg-muted">
+        <AspectRatio ratio={3 / 4}>
           <Image
             src={
               product.imageOne.length > 0
@@ -62,7 +62,8 @@ export function ItemCard({
             alt={product.name}
             fill
             className="rounded-md object-cover"
-            blurDataURL="https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=80&dpr=2&q=20"
+            priority
+            placeholder="blur"
           />
         </AspectRatio>
       </CardContent>
