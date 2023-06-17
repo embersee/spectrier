@@ -150,6 +150,82 @@ export const sendInvoiceToBot = async ({
   address,
   user: userObj,
 }: InvoiceToSupportProps) => {
+  let newTelegramOrder = [
+    {
+      orderId: 0,
+    },
+  ];
+
+  const userExists = await db.query.user.findFirst({
+    where: (users, { eq }) => eq(users.telegramId, userObj.telegramId),
+  });
+
+  if (!userExists) {
+    await db.transaction(async (tx) => {
+      const NewUser = userObj as NewUser;
+
+      // Create new user
+      const newUser = await tx
+        .insert(user)
+        .values(NewUser)
+        .returning({ userId: user.id });
+
+      const NewOrder: NewOrder = {
+        userId: newUser[0].userId,
+        comment: comment,
+        orderStatus: "created",
+        address: address,
+        paymentType: "telegram",
+        paymentStatus: "incomplete",
+        totalSum,
+      };
+
+      // New order transaction
+      const newOrder = await tx
+        .insert(order)
+        .values(NewOrder)
+        .returning({ orderId: order.id });
+
+      newTelegramOrder = newOrder;
+
+      const NewProductsToOrders: NewProductsToOrders[] = cart.map((v) => ({
+        orderId: newOrder[0].orderId,
+        productId: v.id,
+        quantity: v.quantity,
+      }));
+
+      // New productToOrder many-to-many connection
+      await tx.insert(productsToOrders).values(NewProductsToOrders).returning();
+    });
+  } else {
+    await db.transaction(async (tx) => {
+      const NewOrder: NewOrder = {
+        userId: userExists.id,
+        comment: comment,
+        orderStatus: "created",
+        address: address,
+        paymentType: "telegram",
+        paymentStatus: "incomplete",
+        totalSum,
+      };
+
+      // New order transaction
+      const newOrder = await tx
+        .insert(order)
+        .values(NewOrder)
+        .returning({ orderId: order.id });
+
+      const NewProductsToOrders: NewProductsToOrders[] = cart.map((v) => ({
+        orderId: newOrder[0].orderId,
+        productId: v.id,
+        quantity: v.quantity,
+      }));
+
+      // New productToOrder many-to-many connection
+      await tx.insert(productsToOrders).values(NewProductsToOrders).returning();
+    });
+  }
+
   const prices = cart.map((value) => {
     return {
       label: value.name,
@@ -157,7 +233,15 @@ export const sendInvoiceToBot = async ({
     };
   });
 
-  console.log(JSON.stringify(prices));
+  const items = cart.map((c, i) => ({
+    name: c.name,
+    quantity: c.quantity,
+    sum: c.price * (c.quantity as number),
+    // cost: c.price,
+    // payment_method: "full_payment",
+    // payment_object: "commodity",
+    tax: "none", // FIXME: ask vadim https://docs.robokassa.kz/fiscalization/#example
+  }));
 
   const invoice = {
     chat_id: userObj.telegramId,
@@ -165,9 +249,17 @@ export const sendInvoiceToBot = async ({
     description: "Оплатите ваш заказ!",
     provider_token: process.env.ROBOKASSA_TEST_KEY,
     payload: {
-      unique_id: `${user.telegramId}_${new Date().toISOString()}`,
+      unique_id: `${userObj.telegramId}_${new Date().toISOString()}`,
+      order_id: newTelegramOrder.at(0)?.orderId,
       provider_token: process.env.ROBOKASSA_TEST_KEY,
     },
+    provider_data: {
+      InvoiceId: userObj.telegramId + new Date().getTime(),
+      Receipt: {
+        items: items,
+      },
+    },
+
     currency: "KZT",
     start_parameter: "test",
     prices: prices,
@@ -177,7 +269,15 @@ export const sendInvoiceToBot = async ({
     send_phone_number_to_provider: true,
   };
 
-  const res = await fetch(
+  await sendMessageToUser({
+    cart,
+    totalSum,
+    comment,
+    address,
+    user: userObj,
+  });
+
+  await fetch(
     `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendInvoice`,
     {
       method: "POST",
@@ -187,14 +287,4 @@ export const sendInvoiceToBot = async ({
       body: JSON.stringify(invoice),
     }
   );
-
-  console.log(await res.json());
-
-  return await sendMessageToUser({
-    cart,
-    totalSum,
-    comment,
-    address,
-    user: userObj,
-  });
 };
