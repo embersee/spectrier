@@ -63,13 +63,12 @@ export function ItemCard({
             fill
             className="rounded-md object-cover"
             priority
-            placeholder="blur"
           />
         </AspectRatio>
       </CardContent>
       <CardHeader className="p-2 pb-0 flex">
         <CardTitle>{product.name}</CardTitle>
-        <h3>{product.price} ₽</h3>
+        <h3>{product.price} ₸</h3>
       </CardHeader>
       <CardFooter className="p-2 space-x-2">
         {cart.some((value) => value.id == product.id) ? (

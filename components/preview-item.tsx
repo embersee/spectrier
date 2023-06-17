@@ -91,7 +91,7 @@ export default function PreviewItem({
               <div className="flex flex-col justify-end mt-10 bg-gradient-to-t p-4 from-black">
                 <div className="flex justify-between text-2xl font-semibold">
                   <p>{product?.name}</p>
-                  <p>{product?.price} ₽</p>
+                  <p>{product?.price} ₸</p>
                 </div>
                 <DialogDescription className=" text-left">
                   {product?.description}

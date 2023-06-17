@@ -123,7 +123,7 @@ const sendMessageToUser = async ({
   const message = `*Ваш Заказ:*
 ${items}
 ––––––––––––––
-*Total:* ${totalSum} Рублей
+*Итог:* ${totalSum} Тенге
 ${
   comment &&
   `––––––––––––––
@@ -141,4 +141,60 @@ ${
   );
 
   await res.json().then((data) => console.log(data));
+};
+
+export const sendInvoiceToBot = async ({
+  cart,
+  totalSum,
+  comment,
+  address,
+  user: userObj,
+}: InvoiceToSupportProps) => {
+  const prices = cart.map((value) => {
+    return {
+      label: value.name,
+      amount: value.price * 100 * (value.quantity as number),
+    };
+  });
+
+  console.log(JSON.stringify(prices));
+
+  const invoice = {
+    chat_id: userObj.telegramId,
+    title: `Ваш Заказ №${userObj.telegramId}_${new Date().getTime()}`,
+    description: "Оплатите ваш заказ!",
+    provider_token: process.env.ROBOKASSA_TEST_KEY,
+    payload: {
+      unique_id: `${user.telegramId}_${new Date().toISOString()}`,
+      provider_token: process.env.ROBOKASSA_TEST_KEY,
+    },
+    currency: "KZT",
+    start_parameter: "test",
+    prices: prices,
+    need_phone_number: true,
+    need_email: true,
+    need_shipping_address: true,
+    send_phone_number_to_provider: true,
+  };
+
+  const res = await fetch(
+    `https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendInvoice`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(invoice),
+    }
+  );
+
+  console.log(await res.json());
+
+  return await sendMessageToUser({
+    cart,
+    totalSum,
+    comment,
+    address,
+    user: userObj,
+  });
 };

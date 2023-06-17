@@ -14,7 +14,7 @@ import { useEffect, useState, useTransition } from "react";
 import CartItem from "@/components/cart-item";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
-import { sendInvoiceToSupport } from "../../actions";
+import { sendInvoiceToBot, sendInvoiceToSupport } from "../../actions";
 import { NewUser } from "@/lib/db/schema";
 import { Loader2 } from "lucide-react";
 
@@ -51,15 +51,48 @@ export default function CartPage() {
       username: Telegram.WebApp.initDataUnsafe.user?.username as string,
     };
 
+    let sanitisedComment = comment.replaceAll(".", " ");
+    let sanitisedAddress = address.replaceAll(".", " ");
+
     startTransition(() =>
-      sendInvoiceToSupport({ cart, totalSum, comment, address, user }).then(
-        () =>
-          Telegram.WebApp.showAlert(
-            "Ваш заказ был создан! Ожидаете связи консультанта.",
-            () => Telegram.WebApp.close()
-          )
+      sendInvoiceToSupport({
+        cart,
+        totalSum,
+        comment: sanitisedComment,
+        address: sanitisedAddress,
+        user,
+      }).then(() =>
+        Telegram.WebApp.showAlert(
+          "Ваш заказ был создан! Ожидаете связи консультанта.",
+          () => Telegram.WebApp.close()
+        )
       )
     );
+  };
+
+  const submitInvoiceToBot = () => {
+    const user: NewUser = {
+      name: (Telegram.WebApp.initDataUnsafe.user?.first_name as string) || "",
+      telegramId: Telegram.WebApp.initDataUnsafe.user?.id.toString() as string,
+      username: Telegram.WebApp.initDataUnsafe.user?.username as string,
+    };
+
+    let sanitisedComment = comment.replaceAll(".", " ");
+    let sanitisedAddress = address.replaceAll(".", " ");
+
+    startTransition(() => {
+      sendInvoiceToBot({
+        cart,
+        totalSum,
+        comment: sanitisedComment,
+        address: sanitisedAddress,
+        user,
+      }).then(() =>
+        Telegram.WebApp.showAlert("Ваш заказ был создан!", () =>
+          Telegram.WebApp.close()
+        )
+      );
+    });
   };
 
   return (
@@ -73,16 +106,14 @@ export default function CartPage() {
           <Separator />
           <div className="p-2 h-10 rounded-md flex items-center justify-between">
             <p className=" text-lg">Итог: </p>
-            <p>{totalSum} ₽</p>
+            <p>{totalSum} ₸</p>
           </div>
           <Separator />
           <div className="space-y-2 pt-4">
             <Input
               placeholder="Добавьте комментарий..."
               value={comment}
-              onChange={(value) =>
-                setComment(value.currentTarget.value.replace(/[.,\s]/g, ""))
-              }
+              onChange={(value) => setComment(value.currentTarget.value)}
             />
             <p className="text-sm text-muted-foreground">
               Любые особые пожелания, детали или вопросы.
@@ -90,9 +121,7 @@ export default function CartPage() {
             <Input
               placeholder="Адрес"
               value={address}
-              onChange={(value) =>
-                setAddress(value.currentTarget.value.replace(/[.,\s]/g, ""))
-              }
+              onChange={(value) => setAddress(value.currentTarget.value)}
             />
             <p className="text-sm text-muted-foreground">
               Введите адрес доставки...
@@ -112,7 +141,16 @@ export default function CartPage() {
                 "Через консультанта"
               )}
             </Button>
-            <Button disabled>Через телеграмм</Button>
+            <Button onClick={submitInvoiceToBot} disabled={isPending}>
+              {isPending ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Отправляется...
+                </>
+              ) : (
+                "Через телеграмм"
+              )}
+            </Button>
           </div>
           <p className="text-sm text-muted-foreground">
             Через консультанта: наш сотрудник свяжеся с вами насчет оплаты

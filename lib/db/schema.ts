@@ -9,7 +9,6 @@ import {
   pgEnum,
   primaryKey,
 } from "drizzle-orm/pg-core";
-import { db } from ".";
 
 export const user = pgTable("user", {
   id: serial("id").primaryKey(),

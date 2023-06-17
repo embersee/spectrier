@@ -187,7 +187,7 @@ export const orderColumns: ColumnDef<Orders>[] = [
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            ₽{row.original.order.totalSum}
+            ₸{row.original.order.totalSum}
           </span>
         </div>
       );
