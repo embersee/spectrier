@@ -33,6 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState, useTransition } from "react";
+import Image from "next/image";
 
 export default function EditForm({
   defaultValues,
@@ -80,6 +81,12 @@ export default function EditForm({
     }
   };
 
+  const images = [
+    defaultValues?.imageOne,
+    defaultValues?.imageTwo,
+    defaultValues?.imageThree,
+  ];
+
   return (
     <Dialog open={isOpen} onOpenChange={handleOnOpenChange}>
       <DialogContent>
@@ -88,6 +95,23 @@ export default function EditForm({
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
 
+        <div className="flex justify-center items-center h-40 space-x-2">
+          {images.map(
+            (image, i) =>
+              image?.length && (
+                <Image
+                  key={i}
+                  src={image}
+                  alt={image}
+                  // fill
+                  height={150}
+                  width={50}
+                  className="rounded-md object-cover border h-40 w-32"
+                  priority
+                />
+              )
+          )}
+        </div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -114,7 +138,7 @@ export default function EditForm({
                 <FormItem>
                   <FormLabel>Название товара</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} placeholder="до 256 символа" />
                   </FormControl>
 
                   <FormMessage />
@@ -128,7 +152,7 @@ export default function EditForm({
                 <FormItem>
                   <FormLabel>Описание товара</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} placeholder="до 256 символа" />
                   </FormControl>
 
                   <FormMessage />
@@ -170,7 +194,11 @@ export default function EditForm({
                 <FormItem>
                   <FormLabel>Цена</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="числовое значение, не меньше 0, без дробей"
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -184,7 +212,11 @@ export default function EditForm({
                 <FormItem>
                   <FormLabel>Дисконт</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="числовое значение, не меньше 0, без дробей"
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -198,22 +230,11 @@ export default function EditForm({
                 <FormItem>
                   <FormLabel>Кол. на складе</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="imageOne"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Картинка 1</FormLabel>
-                  <FormControl>
-                    <Input {...field} readOnly />
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="числовое значение, не меньше 1, без дробей"
+                    />
                   </FormControl>
 
                   <FormMessage />

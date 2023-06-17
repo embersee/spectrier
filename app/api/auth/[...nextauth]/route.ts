@@ -25,8 +25,6 @@ export const OPTIONS: NextAuthOptions = {
 
         const user = await validator.validate(data);
 
-        console.log(JSON.stringify(user, null, 4));
-
         if (user.username) {
           return {
             id: user.id.toString(),

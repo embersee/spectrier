@@ -89,7 +89,9 @@ export default function CreateProductForm({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Добавить новый товар в магазин</DialogTitle>
-          <DialogDescription>Описание действия</DialogDescription>
+          <DialogDescription>
+            Картинки будут отображатся в соотношении 3:4
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex space-x-2 justify-center items-center ">
@@ -120,7 +122,7 @@ export default function CreateProductForm({
                 <FormItem>
                   <FormLabel>Название товара</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} placeholder="до 256 символа" />
                   </FormControl>
 
                   <FormMessage />
@@ -134,7 +136,7 @@ export default function CreateProductForm({
                 <FormItem>
                   <FormLabel>Описание товара</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} placeholder="до 256 символа" />
                   </FormControl>
 
                   <FormMessage />
@@ -173,7 +175,11 @@ export default function CreateProductForm({
                 <FormItem>
                   <FormLabel>Цена</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="числовое значение, не меньше 0, без дробей"
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -187,7 +193,11 @@ export default function CreateProductForm({
                 <FormItem>
                   <FormLabel>Дисконт</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="числовое значение, не меньше 0, без дробей"
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -201,7 +211,11 @@ export default function CreateProductForm({
                 <FormItem>
                   <FormLabel>Кол. на складе</FormLabel>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input
+                      type="number"
+                      {...field}
+                      placeholder="числовое значение, не меньше 1, без дробей"
+                    />
                   </FormControl>
 
                   <FormMessage />

@@ -20,7 +20,7 @@ export default function Navigation() {
         <NavigationMenuItem>
           <Link href="/dashboard/products" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Продукты
+              Товары
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

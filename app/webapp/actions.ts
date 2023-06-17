@@ -140,7 +140,7 @@ ${
     message
   );
 
-  await res.json().then((data) => console.log(data));
+  await res.json();
 };
 
 export const sendInvoiceToBot = async ({
@@ -214,6 +214,8 @@ export const sendInvoiceToBot = async ({
         .insert(order)
         .values(NewOrder)
         .returning({ orderId: order.id });
+
+      newTelegramOrder = newOrder;
 
       const NewProductsToOrders: NewProductsToOrders[] = cart.map((v) => ({
         orderId: newOrder[0].orderId,

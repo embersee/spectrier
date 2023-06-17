@@ -21,7 +21,7 @@ export default function Upload({ setImages }: UploadProps) {
       endpoint="ProductImages"
       onClientUploadComplete={(res) => {
         // Do something with the response
-        console.log("Files: ", res);
+        // console.log("Files: ", res);
         // alert("Upload Completed");
         setImages(res || []);
       }}

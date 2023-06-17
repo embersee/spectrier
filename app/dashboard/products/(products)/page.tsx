@@ -16,7 +16,7 @@ export default async function ProductsPage() {
     <>
       <div className="flex space-x-4">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          Продукты
+          Товары
         </h1>
         <Link href={"/dashboard/products/create"}>
           <Button variant="secondary">Создать</Button>

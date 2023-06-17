@@ -3,10 +3,17 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DataTableColumnHeader } from "@/components/table/column-header";
-import { Category, Product } from "@/lib/db/schema";
+
 import { DataTableRowActions } from "./row-action";
 import { Badge } from "../ui/badge";
 import { Orders } from "@/types/orders";
+
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export const orderColumns: ColumnDef<Orders>[] = [
   {
@@ -62,7 +69,7 @@ export const orderColumns: ColumnDef<Orders>[] = [
     },
   },
   {
-    accessorKey: "description",
+    accessorKey: "user",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Пользователь" />
     ),
@@ -98,11 +105,37 @@ export const orderColumns: ColumnDef<Orders>[] = [
       <DataTableColumnHeader column={column} title="Order Status" />
     ),
     cell: ({ row }) => {
+      const orderStatus = row.original.order.orderStatus;
+
+      function switchResult(a: typeof orderStatus) {
+        switch (a) {
+          case "created":
+            return "bg-green-300";
+          case "cancelled":
+            return "bg-red-500";
+
+          case "failed":
+            return "bg-red-500";
+
+          case "complete":
+            return "bg-green-500";
+
+          case "delivery":
+            return "bg-orange-500";
+
+          case "successful":
+            return "bg-green-500";
+
+          default:
+            return "";
+        }
+      }
+
+      const badgeColour = switchResult(orderStatus);
+
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate font-medium">
-            {row.original.order.orderStatus}
-          </span>
+          <Badge className={badgeColour}>{orderStatus}</Badge>
         </div>
       );
     },
@@ -128,11 +161,27 @@ export const orderColumns: ColumnDef<Orders>[] = [
       <DataTableColumnHeader column={column} title="Payment Status" />
     ),
     cell: ({ row }) => {
+      const paymentStatus = row.original.order.paymentStatus;
+
+      function switchResult(a: typeof paymentStatus) {
+        switch (a) {
+          case "incomplete":
+            return "bg-orange-300";
+          case "refunded":
+            return "bg-red-500";
+          case "failed":
+            return "bg-red-500";
+          case "complete":
+            return "bg-green-500";
+          default:
+            return "";
+        }
+      }
+
+      const badgeColour = switchResult(paymentStatus);
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate font-medium">
-            {row.original.order.paymentStatus}
-          </span>
+          <Badge className={badgeColour}>{paymentStatus}</Badge>
         </div>
       );
     },
@@ -159,19 +208,29 @@ export const orderColumns: ColumnDef<Orders>[] = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="space-y-2 whitespace-nowrap w-32 ">
-          <div className="flex justify-between px-1">
-            <p className=" truncate font-medium">Название</p>
-            <p className=" truncate font-medium">Кол.</p>
-          </div>
-          {row.original.product.map((item) => (
-            <div key={item.id} className="flex flex-col p-1 border rounded-lg">
-              <div className=" truncate font-medium flex justify-between">
-                <p>{item.name}</p>
-                <p>{item.quantity}</p>
-              </div>
-            </div>
-          ))}
+        <div className=" whitespace-nowrap w-56 ">
+          <Accordion type="single" collapsible className="p-0 m-0 w-56">
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Товары заказа</AccordionTrigger>
+              <AccordionContent className="space-y-4">
+                <div className="flex justify-between px-1">
+                  <p className=" truncate font-medium">Название</p>
+                  <p className=" truncate font-medium">Кол.</p>
+                </div>
+                {row.original.product.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex flex-col p-1 border rounded-lg mb-1"
+                  >
+                    <div className=" truncate font-medium flex justify-between">
+                      <p>{item.name}</p>
+                      <p>{item.quantity}</p>
+                    </div>
+                  </div>
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
       );
     },
