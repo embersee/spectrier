@@ -17,6 +17,7 @@ import { useCartStore } from "@/lib/store";
 import { storeProduct } from "@/types/products";
 import { MinusIcon, PlusIcon, X } from "lucide-react";
 import { Badge } from "./ui/badge";
+import Carousel from "./ui/carousel";
 
 export default function PreviewItem({
   product,
@@ -54,61 +55,60 @@ export default function PreviewItem({
     product?.imageTwo,
     product?.imageThree,
   ]);
-  const [next, setNext] = useState(0);
 
   const cartItem = cart.find((item) => item.id === product?.id);
-
-  // TODO: OPTIMIZE IMAGES BY PRELOADING THEM ALL
 
   return (
     <Dialog open onOpenChange={handleOnOpenChange}>
       <DialogContent className="sm:max-w-[300px] p-2 pt-4 gap-4">
         <div className="pt-6 relative select-none">
-          <AspectRatio
+          {/* <AspectRatio
             ratio={3 / 4}
             className="bg-muted relative"
             onClick={() => setNext((n) => (n < images.length - 1 ? n + 1 : 0))}
-          >
-            {cartItem && (
-              <Badge
-                className={`${
-                  effect && "animate-in zoom-in-110"
-                } absolute top-0 right-0 z-50 text-lg shadow-2xl`}
-                onAnimationEnd={() => setEffect(false)}
-              >
-                В корзине: {cartItem.quantity}
-              </Badge>
-            )}
-            <Image
-              src={images.at(next) || ""}
-              alt={product?.name || ""}
-              fill
-              className="rounded-md object-cover select-none"
-              priority
-            />
+          > */}
+          {cartItem && (
+            <Badge
+              className={`${
+                effect && "animate-in zoom-in-110"
+              } absolute top-0 right-0 z-50 text-lg shadow-2xl`}
+              onAnimationEnd={() => setEffect(false)}
+            >
+              В корзине: {cartItem.quantity}
+            </Badge>
+          )}
 
-            <div className="absolute bottom-0 z-50 w-full pt-10 bg-gradient-to-t from-black">
-              <div className="flex flex-col justify-end mt-10 bg-gradient-to-t p-4 from-black">
-                <div className="flex justify-between text-2xl font-semibold">
-                  <p>{product?.name}</p>
-                  <p>{product?.price} ₸</p>
-                </div>
-                <DialogDescription className=" text-left">
-                  {product?.description}
-                </DialogDescription>
-                {/* <p className=" text-left">
-                  Осталось на складе: {product?.stock}
-                </p> */}
+          <Carousel show={1} infiniteLoop withIndicator>
+            {images.map((img, i) => (
+              <Image
+                key={i}
+                src={img || ""}
+                alt={product?.name || ""}
+                height={200}
+                width={100}
+                className="rounded-md object-cover select-none"
+                priority
+                data-testid={`carousel-item-${i + 1}`}
+              />
+            ))}
+          </Carousel>
 
-                <p className="text-sm text-muted-foreground text-left">
-                  Всего изображений: {images.length}
-                </p>
-                <p className="text-sm text-muted-foreground text-left">
-                  Нажмите на изображение чтобы листать их
-                </p>
+          <div className=" w-full bg-gradient-to-t from-black">
+            <div className="flex flex-col bg-gradient-to-t p-4 from-black">
+              <div className="flex justify-between text-2xl font-semibold">
+                <p>{product?.name}</p>
+                <p>{product?.price} ₸</p>
               </div>
+              <DialogDescription className=" text-left">
+                {product?.description}
+              </DialogDescription>
+
+              <p className="text-sm text-muted-foreground text-left">
+                Всего изображений: {images.length}
+              </p>
             </div>
-          </AspectRatio>
+          </div>
+          {/* </AspectRatio> */}
           <div className="my-2 flex justify-center space-x-2">
             <Button variant="destructive" onClick={() => router.back()}>
               <X />
