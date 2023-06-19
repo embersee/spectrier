@@ -99,7 +99,7 @@ export function ItemCard({
               addToCart(product);
             }}
           >
-            Добавить
+            Купить
           </Button>
         )}
       </CardFooter>

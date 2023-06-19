@@ -141,7 +141,7 @@ export default function PreviewItem({
                   addToCart(product as storeProduct);
                 }}
               >
-                Добавить в корзину
+                Купить
               </Button>
             )}
           </div>

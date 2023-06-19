@@ -16,7 +16,7 @@ export function CartView() {
   useEffect(() => {
     if (window == undefined) return;
     if (totalItems > 0) {
-      Telegram.WebApp.MainButton.setText("Посмотреть корзину");
+      Telegram.WebApp.MainButton.setText("Купить");
       Telegram.WebApp.MainButton.onClick(() => router.push("/webapp/cart"));
       Telegram.WebApp.MainButton.show();
     } else {

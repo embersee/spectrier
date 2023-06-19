@@ -1,3 +1,4 @@
+import { botConfig } from "@/config/bot";
 import { db } from "@/lib/db";
 import { order } from "@/lib/db/schema";
 import { InvoicePayload } from "@/types/invoice-payload";
@@ -10,11 +11,11 @@ if (!token) throw new Error("BOT_TOKEN is unset");
 const bot = new Bot(token);
 
 bot.command("start", async (ctx) => {
-  await ctx.reply("Hello, world!");
+  await ctx.reply(botConfig.commands.start);
 });
 
 bot.command("help", async (ctx) => {
-  await ctx.reply("help");
+  await ctx.reply(botConfig.commands.help);
 });
 
 bot.command("terms", async (ctx) => {
@@ -22,7 +23,7 @@ bot.command("terms", async (ctx) => {
 });
 
 bot.command("catalog", async (ctx) => {
-  await ctx.reply("как открыть каталог");
+  await ctx.reply(botConfig.commands.catalog);
 });
 
 bot.on("pre_checkout_query", async (ctx) => {
@@ -41,7 +42,7 @@ bot.on("message:successful_payment", async (ctx) => {
     .set({ orderStatus: "successful", paymentStatus: "complete" })
     .where(eq(order.id, payload.order_id));
 
-  return ctx.reply("Успешно оплачено!");
+  return ctx.reply(botConfig.commands.success);
 });
 
 export default webhookCallback(bot, "next-js");
