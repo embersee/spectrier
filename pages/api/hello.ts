@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.status(200).json({ name: "Built by embersee (t.me/embersee)" });
+  res.status(200).json({ res: "Built by embersee (t.me/embersee)" });
 }
