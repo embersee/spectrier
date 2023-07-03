@@ -1,41 +1,29 @@
+import { botConfig } from "@/config/bot";
 import { db } from "@/lib/db";
 import { order } from "@/lib/db/schema";
 import { InvoicePayload } from "@/types/invoice-payload";
 import { eq } from "drizzle-orm";
-import { Bot, webhookCallback, Context } from "grammy";
-
-import { I18n, I18nFlavor } from "@grammyjs/i18n";
-
-// For TypeScript and auto-completion support,
-// extend the context with I18n's flavor:
-type MyContext = Context & I18nFlavor;
-
-const i18n = new I18n<MyContext>({
-  defaultLocale: "ru",
-  directory: "locales",
-});
+import { Bot, webhookCallback } from "grammy";
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN is unset");
 
-const bot = new Bot<MyContext>(token);
-
-bot.use(i18n);
+const bot = new Bot(token);
 
 bot.command("start", async (ctx) => {
-  await ctx.reply(ctx.t("start"));
+  await ctx.reply(botConfig.commands.start);
 });
 
 bot.command("help", async (ctx) => {
-  await ctx.reply(ctx.t("help"));
+  await ctx.reply(botConfig.commands.help);
 });
 
 bot.command("terms", async (ctx) => {
-  await ctx.reply(ctx.t("terms"));
+  await ctx.reply("terms");
 });
 
 bot.command("catalog", async (ctx) => {
-  await ctx.reply(ctx.t("catalog"));
+  await ctx.reply(botConfig.commands.catalog);
 });
 
 bot.on("pre_checkout_query", async (ctx) => {
@@ -54,7 +42,7 @@ bot.on("message:successful_payment", async (ctx) => {
     .set({ orderStatus: "successful", paymentStatus: "complete" })
     .where(eq(order.id, payload.order_id));
 
-  return ctx.reply(ctx.t("success"));
+  return ctx.reply(botConfig.commands.success);
 });
 
 export default webhookCallback(bot, "next-js");
