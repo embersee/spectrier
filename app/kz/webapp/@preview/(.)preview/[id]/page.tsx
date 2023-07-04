@@ -1,5 +1,6 @@
 import { getProduct } from "@/app/dashboard/products/actions";
 import PreviewItem from "@/components/preview-item";
+import PreviewItemKZ from "@/components/preview-item-kz";
 
 interface PreviewModalProps {
   params: {
@@ -12,5 +13,5 @@ export default async function PreviewModal({ params }: PreviewModalProps) {
 
   const product = await getProduct(Number(id));
 
-  return <PreviewItem product={product} />;
+  return <PreviewItemKZ product={product} />;
 }

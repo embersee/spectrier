@@ -1,13 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useCartStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
@@ -63,7 +57,7 @@ export default function CartPage() {
         user,
       }).then(() =>
         Telegram.WebApp.showAlert(
-          "Сіздің тапсырысыңыз жасалды! Кеңесшінің байланысын күтуде.",
+          "Тапсырысыңыз жасалды, кеңесшіні күтіңіз",
           () => Telegram.WebApp.close()
         )
       )
@@ -88,7 +82,7 @@ export default function CartPage() {
         address: sanitisedAddress,
         user,
       }).then(() =>
-        Telegram.WebApp.showAlert("Сіздің тапсырысыңыз жасалды!", () =>
+        Telegram.WebApp.showAlert("Тапсырысыңыз жасалды", () =>
           Telegram.WebApp.close()
         )
       );
@@ -116,7 +110,7 @@ export default function CartPage() {
               onChange={(value) => setComment(value.currentTarget.value)}
             />
             <p className="text-sm text-muted-foreground">
-              Кез келген арнайы сұраулар, мәліметтер немесе сұрақтар.
+              Кез келген тілектер, мәліметтер немесе сұрақтар.
             </p>
             <Input
               placeholder="Мекенжай"
@@ -129,7 +123,7 @@ export default function CartPage() {
           </div>
         </div>
         <div className="space-y-2">
-          <h2>Төлем әдісін таңдаңыз:</h2>
+          <h2>Төлеу әдісін таңдаңыз:</h2>
           <div className="flex space-x-2 w-full justify-center">
             <Button onClick={submitInvoiceToSupport} disabled={isPending}>
               {isPending ? (
@@ -138,7 +132,7 @@ export default function CartPage() {
                   Жүру...
                 </>
               ) : (
-                "кеңесші"
+                "Кеңесші арқылы"
               )}
             </Button>
             <Button onClick={submitInvoiceToBot} disabled={isPending}>
@@ -148,7 +142,7 @@ export default function CartPage() {
                   Жүру...
                 </>
               ) : (
-                "телеграмма арқылы"
+                "Телеграмма арқылы"
               )}
             </Button>
           </div>

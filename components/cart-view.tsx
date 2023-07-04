@@ -27,7 +27,7 @@ export function CartView() {
   const clickCart = () => {
     if (!totalItems) {
       showPopup({
-        title: "Oops!",
+        title: "Oops! 😭",
         message: "Your Cart is empty!",
         buttons: [{ type: "ok" }],
       });

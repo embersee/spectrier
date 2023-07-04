@@ -1,8 +1,8 @@
 import { CartView } from "@/components/cart-view";
-import Catalog from "@/components/catalog";
 import { db } from "@/lib/db";
 import { Products } from "@/types/products";
 import { getCategories } from "./actions";
+import CatalogKZ from "@/components/catalog-kz";
 
 export default async function WebAppPage() {
   const products = (await db.query.product.findMany({
@@ -22,7 +22,7 @@ export default async function WebAppPage() {
 
         <CartView />
       </div>
-      <Catalog products={products} categories={categories} />
+      <CatalogKZ products={products} categories={categories} />
     </section>
   );
 }

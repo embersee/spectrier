@@ -11,19 +11,35 @@ if (!token) throw new Error("BOT_TOKEN is unset");
 const bot = new Bot(token);
 
 bot.command("start", async (ctx) => {
-  await ctx.reply(botConfig.commands.start);
+  if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
+    return await ctx.reply(botConfig.kk.commands.start);
+  }
+
+  await ctx.reply(botConfig.ru.commands.start);
 });
 
 bot.command("help", async (ctx) => {
-  await ctx.reply(botConfig.commands.help);
+  if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
+    return await ctx.reply(botConfig.kk.commands.help);
+  }
+
+  await ctx.reply(botConfig.ru.commands.help);
 });
 
 bot.command("terms", async (ctx) => {
+  if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
+    return await ctx.reply(botConfig.kk.commands.terms);
+  }
+
   await ctx.reply("terms");
 });
 
 bot.command("catalog", async (ctx) => {
-  await ctx.reply(botConfig.commands.catalog);
+  if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
+    return await ctx.reply(botConfig.kk.commands.catalog);
+  }
+
+  await ctx.reply(botConfig.ru.commands.catalog);
 });
 
 bot.on("pre_checkout_query", async (ctx) => {
@@ -42,7 +58,11 @@ bot.on("message:successful_payment", async (ctx) => {
     .set({ orderStatus: "successful", paymentStatus: "complete" })
     .where(eq(order.id, payload.order_id));
 
-  return ctx.reply(botConfig.commands.success);
+  if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
+    return await ctx.reply(botConfig.kk.commands.success);
+  }
+
+  return ctx.reply(botConfig.ru.commands.success);
 });
 
 export default webhookCallback(bot, "next-js");
