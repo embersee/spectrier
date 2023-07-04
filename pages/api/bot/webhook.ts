@@ -11,6 +11,8 @@ if (!token) throw new Error("BOT_TOKEN is unset");
 const bot = new Bot(token);
 
 bot.command("start", async (ctx) => {
+  console.log(JSON.stringify(ctx.from, null, 4));
+
   if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
     return await ctx.reply(botConfig.kk.commands.start);
   }
