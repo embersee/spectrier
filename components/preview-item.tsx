@@ -93,8 +93,8 @@ export default function PreviewItem({
             ))}
           </Carousel>
 
-          <div className=" w-full bg-gradient-to-t from-black">
-            <div className="flex flex-col bg-gradient-to-t p-4 from-black">
+          <div className=" w-full ">
+            <div className="flex flex-col  p-4 ">
               <div className="flex justify-between text-2xl font-semibold">
                 <p>{product?.name}</p>
                 <p>{product?.price} ₸</p>
