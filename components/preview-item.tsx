@@ -84,9 +84,9 @@ export default function PreviewItem({
                 key={i}
                 src={img || ""}
                 alt={product?.name || ""}
-                height={200}
-                width={100}
-                className="rounded-md object-cover select-none"
+                height={300}
+                width={300}
+                className="rounded-md object-cover select-none h-[350px] w-[350px]"
                 priority
                 data-testid={`carousel-item-${i + 1}`}
               />
