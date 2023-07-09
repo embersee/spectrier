@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { ShoppingCartIcon } from "lucide-react";
 import { useShowPopup } from "@vkruglikov/react-telegram-web-app";
 
-export function CartView() {
+export function CartViewKZ() {
   const router = useRouter();
   const showPopup = useShowPopup();
 
@@ -16,8 +16,8 @@ export function CartView() {
   useEffect(() => {
     if (window == undefined) return;
     if (totalItems > 0) {
-      Telegram.WebApp.MainButton.setText("Купить");
-      Telegram.WebApp.MainButton.onClick(() => router.push("/webapp/cart"));
+      Telegram.WebApp.MainButton.setText("Сатып алу");
+      Telegram.WebApp.MainButton.onClick(() => router.push("/kz/webapp/cart"));
       Telegram.WebApp.MainButton.show();
     } else {
       Telegram.WebApp.MainButton.hide();
@@ -28,12 +28,12 @@ export function CartView() {
     if (!totalItems) {
       showPopup({
         title: "Oops! 😭",
-        message: "Ваша корзина пуста!",
+        message: "Себет бос!",
         buttons: [{ type: "ok" }],
       });
       return;
     }
-    router.push("/webapp/cart");
+    router.push("/kz/webapp/cart");
   };
 
   return (
