@@ -24,6 +24,8 @@ export const productUpdateSchema = z.object({
   imageOne: z.string(),
   imageTwo: z.string().nullish().default(""),
   imageThree: z.string().nullish().default(""),
+  imageFour: z.string().nullish().default(""),
+  imageFive: z.string().nullish().default(""),
 });
 
 export type ProductFormUpdate = z.infer<typeof productUpdateSchema>;

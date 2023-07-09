@@ -53,6 +53,8 @@ export default function PreviewItemKZ({
     product?.imageOne,
     product?.imageTwo,
     product?.imageThree,
+    product?.imageFour,
+    product?.imageFive,
   ]);
 
   const cartItem = cart.find((item) => item.id === product?.id);
@@ -83,17 +85,17 @@ export default function PreviewItemKZ({
                 key={i}
                 src={img || ""}
                 alt={product?.name || ""}
-                height={200}
-                width={100}
-                className="rounded-md object-cover select-none"
+                height={300}
+                width={300}
+                className="rounded-md object-cover select-none h-[350px] w-[350px]"
                 priority
                 data-testid={`carousel-item-${i + 1}`}
               />
             ))}
           </Carousel>
 
-          <div className=" w-full bg-gradient-to-t from-black">
-            <div className="flex flex-col bg-gradient-to-t p-4 from-black">
+          <div className=" w-full">
+            <div className="flex flex-col p-4 ">
               <div className="flex justify-between text-2xl font-semibold">
                 <p>{product?.name}</p>
                 <p>{product?.price} ₸</p>

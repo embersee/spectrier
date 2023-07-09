@@ -3,12 +3,15 @@ import Catalog from "@/components/catalog";
 import { db } from "@/lib/db";
 import { Products } from "@/types/products";
 import { getCategories } from "./actions";
+import { gt } from "drizzle-orm";
+import { product } from "@/lib/db/schema";
 
 export default async function WebAppPage() {
   const products = (await db.query.product.findMany({
     with: {
       category: true,
     },
+    where: gt(product.stock, 0),
   })) as Products[];
 
   const categories = await getCategories();

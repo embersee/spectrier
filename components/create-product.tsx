@@ -66,6 +66,8 @@ export default function CreateProductForm({
       imageOne: images.at(0)?.fileUrl,
       imageTwo: images.at(1)?.fileUrl,
       imageThree: images.at(2)?.fileUrl,
+      imageFour: images.at(3)?.fileUrl,
+      imageFive: images.at(4)?.fileUrl,
     };
     startTransition(() =>
       onSubmitProduct(NewData)

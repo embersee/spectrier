@@ -54,6 +54,8 @@ export default function PreviewItem({
     product?.imageOne,
     product?.imageTwo,
     product?.imageThree,
+    product?.imageFour,
+    product?.imageFive,
   ]);
 
   const cartItem = cart.find((item) => item.id === product?.id);

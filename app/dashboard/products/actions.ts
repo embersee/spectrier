@@ -10,6 +10,8 @@ interface ProductInput extends ProductForm {
   imageOne: string | undefined;
   imageTwo: string | undefined;
   imageThree: string | undefined;
+  imageFour: string | undefined;
+  imageFive: string | undefined;
 }
 
 export async function onSubmitProduct(data: ProductInput) {
@@ -23,6 +25,8 @@ export async function onSubmitProduct(data: ProductInput) {
     imageOne: data.imageOne || "",
     imageTwo: data.imageTwo,
     imageThree: data.imageThree,
+    imageFour: data.imageFour,
+    imageFive: data.imageFive,
     createdAt: new Date().toString(),
   };
 
@@ -75,6 +79,8 @@ export async function updateProduct(data: ProductFormUpdate) {
     imageOne: data.imageOne || "",
     imageTwo: data.imageTwo,
     imageThree: data.imageThree,
+    imageFour: data.imageFour,
+    imageFive: data.imageFive,
     updatedAt: new Date().toString(),
   };
 

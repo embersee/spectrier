@@ -36,6 +36,8 @@ export const product = pgTable("product", {
   imageOne: text("imageOne").notNull(),
   imageTwo: text("imageTwo"),
   imageThree: text("imageThree"),
+  imageFour: text("imageFour"),
+  imageFive: text("imageFive"),
   createdAt: date("createdAt").notNull().defaultNow(),
   updatedAt: date("updatedAt"),
   categoryID: integer("categoryID").references(() => category.id),

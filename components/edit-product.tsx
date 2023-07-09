@@ -63,6 +63,8 @@ export default function EditForm({
     data.imageOne = defaultValues.imageOne;
     data.imageTwo = defaultValues.imageTwo;
     data.imageThree = defaultValues.imageThree;
+    data.imageFour = defaultValues.imageFour;
+    data.imageFive = defaultValues.imageFive;
 
     startTransition(() =>
       updateProduct(data)
@@ -85,6 +87,8 @@ export default function EditForm({
     defaultValues?.imageOne,
     defaultValues?.imageTwo,
     defaultValues?.imageThree,
+    defaultValues?.imageFour,
+    defaultValues?.imageFive,
   ];
 
   return (
