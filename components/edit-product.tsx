@@ -35,6 +35,7 @@ import {
 import { useState, useTransition } from "react";
 import Image from "next/image";
 import Carousel from "./ui/carousel";
+import { AspectRatio } from "./ui/aspect-ratio";
 
 export default function EditForm({
   defaultValues,
@@ -84,45 +85,52 @@ export default function EditForm({
     }
   };
 
-  const images = [
+  function filterNullValues<T>(array: (T | null)[]): T[] {
+    return array.filter((item) => item !== null) as T[];
+  }
+
+  const images = filterNullValues([
     defaultValues?.imageOne,
     defaultValues?.imageTwo,
     defaultValues?.imageThree,
     defaultValues?.imageFour,
     defaultValues?.imageFive,
-  ];
+  ]);
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOnOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Редактировать товар</DialogTitle>
-          <DialogDescription>Описание действия</DialogDescription>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
 
-        <div className="flex space-x-2 justify-center items-center ">
+        <div className="flex justify-center items-center mx-36">
           {/* {images.length <= 0 && <Upload setImages={setImages} />} */}
-          <Carousel show={1} infiniteLoop withIndicator>
-            {images.map((img, i) => (
-              <Image
-                key={i}
-                src={img || ""}
-                alt={""}
-                height={100}
-                width={100}
-                className="rounded-md object-cover select-none h-[200px] w-[200px]"
-                priority
-                data-testid={`carousel-item-${i + 1}`}
-              />
-            ))}
-          </Carousel>
+
+          <div>
+            <Carousel show={1} infiniteLoop withIndicator>
+              {images.map((img, i) => (
+                <Image
+                  key={i}
+                  src={img || ""}
+                  alt={""}
+                  height={100}
+                  width={100}
+                  className="rounded-md object-cover select-none h-[200px]"
+                  priority
+                  data-testid={`carousel-item-${i + 1}`}
+                />
+              ))}
+            </Carousel>
+          </div>
         </div>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-2 flex-col flex"
           >
-            <FormField
+            {/* <FormField
               control={form.control}
               name="id"
               render={({ field }) => (
@@ -135,7 +143,7 @@ export default function EditForm({
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="name"
