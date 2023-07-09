@@ -8,7 +8,7 @@ export const productSchema = z.object({
   category: z.string(),
   price: z.coerce.number().min(1),
   discount: z.coerce.number().min(0),
-  stock: z.coerce.number().min(1),
+  stock: z.coerce.number().min(0),
 });
 
 export const productUpdateSchema = z.object({
@@ -20,7 +20,7 @@ export const productUpdateSchema = z.object({
   category: z.string(),
   price: z.coerce.number().min(1),
   discount: z.coerce.number().min(0),
-  stock: z.coerce.number().min(1),
+  stock: z.coerce.number().min(0),
   imageOne: z.string(),
   imageTwo: z.string().nullish().default(""),
   imageThree: z.string().nullish().default(""),

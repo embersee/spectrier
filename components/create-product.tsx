@@ -216,7 +216,7 @@ export default function CreateProductForm({
                     <Input
                       type="number"
                       {...field}
-                      placeholder="числовое значение, не меньше 1, без дробей"
+                      placeholder="числовое значение, не меньше 0, без дробей"
                     />
                   </FormControl>
 
@@ -224,6 +224,10 @@ export default function CreateProductForm({
                 </FormItem>
               )}
             />
+            <p className="text-sm text-muted-foreground">
+              Если кол. на складе меньше 0 то не будет отображатся в каталоге на
+              продажу
+            </p>
             <DialogFooter>
               <Button
                 type="submit"
