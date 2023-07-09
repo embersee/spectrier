@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/select";
 import { useState, useTransition } from "react";
 import Image from "next/image";
+import Carousel from "./ui/carousel";
 
 export default function EditForm({
   defaultValues,
@@ -99,22 +100,22 @@ export default function EditForm({
           <DialogDescription>Описание действия</DialogDescription>
         </DialogHeader>
 
-        <div className="flex justify-center items-center h-40 space-x-2">
-          {images.map(
-            (image, i) =>
-              image?.length && (
-                <Image
-                  key={i}
-                  src={image}
-                  alt={image}
-                  // fill
-                  height={150}
-                  width={50}
-                  className="rounded-md object-cover border h-40 w-32"
-                  priority
-                />
-              )
-          )}
+        <div className="flex space-x-2 justify-center items-center ">
+          {/* {images.length <= 0 && <Upload setImages={setImages} />} */}
+          <Carousel show={1} infiniteLoop withIndicator>
+            {images.map((img, i) => (
+              <Image
+                key={i}
+                src={img || ""}
+                alt={""}
+                height={100}
+                width={100}
+                className="rounded-md object-cover select-none h-[200px] w-[200px]"
+                priority
+                data-testid={`carousel-item-${i + 1}`}
+              />
+            ))}
+          </Carousel>
         </div>
         <Form {...form}>
           <form
@@ -245,7 +246,10 @@ export default function EditForm({
                 </FormItem>
               )}
             />
-
+            <p className="text-sm text-muted-foreground">
+              Если кол. на складе меньше 0 то не будет отображатся в каталоге на
+              продажу
+            </p>
             <DialogFooter>
               <Button
                 type="submit"

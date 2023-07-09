@@ -37,6 +37,7 @@ import { useState, useTransition } from "react";
 
 import Upload from "@/components/upload";
 import Image from "next/image";
+import Carousel from "./ui/carousel";
 
 export default function CreateProductForm({
   categories,
@@ -98,18 +99,20 @@ export default function CreateProductForm({
 
         <div className="flex space-x-2 justify-center items-center ">
           {images.length <= 0 && <Upload setImages={setImages} />}
-          {images.map((image, i) => (
-            <div key={i}>
+          <Carousel show={1} infiniteLoop withIndicator>
+            {images.map((img, i) => (
               <Image
-                src={image.fileUrl}
-                alt=""
+                key={i}
+                src={img.fileUrl || ""}
+                alt={""}
                 height={100}
                 width={100}
-                className="rounded-md object-cover"
+                className="rounded-md object-cover select-none h-[200px] w-[200px]"
+                priority
+                data-testid={`carousel-item-${i + 1}`}
               />
-              <p> Картинка {i + 1}</p>
-            </div>
-          ))}
+            ))}
+          </Carousel>
         </div>
 
         <Form {...form}>
