@@ -253,8 +253,8 @@ export const orderColumns: ColumnDef<Orders>[] = [
     },
   },
 
-  {
-    id: "actions",
-    cell: ({ row }) => <DataTableRowActions id={row.original.order.id} />,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => <DataTableRowActions id={row.original.order.id} />,
+  // },
 ];
