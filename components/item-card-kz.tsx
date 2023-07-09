@@ -40,7 +40,7 @@ export function ItemCardKZ({
     <Card className={cn("w-full relative", className)}>
       <CardContent
         className="grid gap-4 p-2"
-        onClick={() => router.push(`/webapp/preview/${product.id}`)}
+        onClick={() => router.push(`/kz/webapp/preview/${product.id}`)}
       >
         {cartItem && (
           <Badge
