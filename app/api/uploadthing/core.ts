@@ -13,6 +13,14 @@ export const ourFileRouter = {
       // console.log("Upload complete for userId:", metadata);
       console.log("file url", file.url);
     }),
+  PostImages: f({ image: { maxFileSize: "2MB", maxFileCount: 1 } })
+    // .middleware((req) => auth(req))
+
+    .onUploadComplete(async ({ file }) => {
+      // This code RUNS ON YOUR SERVER after upload
+      // console.log("Upload complete for userId:", metadata);
+      console.log("file url", file.url);
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

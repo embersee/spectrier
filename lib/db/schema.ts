@@ -127,6 +127,13 @@ export const productOrderRelations = relations(product, ({ many }) => ({
   productsToOrders: many(productsToOrders),
 }));
 
+export const post = pgTable("post", {
+  id: serial("id").primaryKey(),
+  postText: text("postText").notNull(),
+  createdAt: date("createdAt").notNull().defaultNow(),
+  postImageURL: text("postImageURL").notNull(),
+});
+
 export type User = InferModel<typeof user>;
 export type NewUser = InferModel<typeof user, "insert">;
 

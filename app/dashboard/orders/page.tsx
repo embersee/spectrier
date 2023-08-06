@@ -3,7 +3,6 @@ import { orderColumns } from "@/components/table/order-columns";
 import { db } from "@/lib/db";
 import {
   Order,
-  Product,
   ProductsToOrders,
   User,
   order,
@@ -11,10 +10,8 @@ import {
   productsToOrders,
   user,
 } from "@/lib/db/schema";
-import { orderProduct, storeProduct } from "@/types/products";
+import { orderProduct } from "@/types/products";
 import { eq } from "drizzle-orm";
-
-import Link from "next/link";
 
 export default async function OrdersPage() {
   const orders = await db
