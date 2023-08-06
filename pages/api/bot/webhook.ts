@@ -21,13 +21,15 @@ const keyboard = new Keyboard()
   .resized()
   .persistent();
 
-const publicPolicy = new InlineKeyboard()
-  .text("Открыть", "policy")
-  .webApp("сайт", "https://spectrier.vercel.app/policy");
+const publicPolicy = new InlineKeyboard().webApp(
+  "Открыть",
+  "https://spectrier.vercel.app/policy"
+);
 
-const publicOffer = new InlineKeyboard()
-  .text("Открыть", "offer")
-  .webApp("сайт", "https://spectrier.vercel.app/public-offer");
+const publicOffer = new InlineKeyboard().webApp(
+  "Открыть",
+  "https://spectrier.vercel.app/public-offer"
+);
 
 bot.command("start", async (ctx) => {
   console.log(JSON.stringify(ctx.from, null, 4));
