@@ -8,6 +8,7 @@ import {
   integer,
   pgEnum,
   primaryKey,
+  boolean,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -41,6 +42,7 @@ export const product = pgTable("product", {
   createdAt: date("createdAt").notNull().defaultNow(),
   updatedAt: date("updatedAt"),
   categoryID: integer("categoryID").references(() => category.id),
+  active: boolean("active").default(true),
 });
 
 export const productRelations = relations(product, ({ one }) => ({
@@ -132,6 +134,8 @@ export const post = pgTable("post", {
   postText: text("postText").notNull(),
   createdAt: date("createdAt").notNull().defaultNow(),
   postImageURL: text("postImageURL").notNull(),
+  sent: boolean("sent").default(false),
+  active: boolean("active").default(true),
 });
 
 export type User = InferModel<typeof user>;
@@ -147,3 +151,6 @@ export type NewOrder = InferModel<typeof order, "insert">;
 
 export type ProductsToOrders = InferModel<typeof productsToOrders>;
 export type NewProductsToOrders = InferModel<typeof productsToOrders, "insert">;
+
+export type Post = InferModel<typeof post>;
+export type NewPost = InferModel<typeof post, "insert">;

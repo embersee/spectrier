@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import UploadPost from "./upload-post";
 import Image from "next/image";
 import { Button } from "./ui/button";
+import { savePost } from "@/app/dashboard/posts/actions";
+import { useRouter } from "next/navigation";
 
 export default function CreatePost() {
   const [images, setImages] = useState<
@@ -14,25 +16,45 @@ export default function CreatePost() {
       fileKey: string;
     }[]
   >([]);
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
   const [postText, setPostText] = useState("");
 
   const textLengthLimit = postText.length > 4096;
 
+  const handleSavePost = () => {
+    if (textLengthLimit) {
+      alert("Текст длинее чем 4096 символов");
+      return;
+    }
+
+    if (images.length == 0) {
+      alert("не подгрузилась картинка, подожди пока загрузиться");
+      return;
+    }
+
+    startTransition(() => {
+      savePost({
+        postText,
+        postImageURL: images.at(0)?.fileUrl as string,
+      }).then(() => router.back());
+    });
+  };
+
   return (
     <div className="flex gap-4 ">
-      <div className=" w-1/2 bg-slate-800 rounded-xl">
-        <h1> Preview post</h1>
+      <div className=" w-1/2 bg-slate-800 rounded-xl p-2">
+        <h1>Preview post</h1>
         {images.map((img, i) => (
           <Image
             key={i}
             src={img.fileUrl || ""}
             alt={""}
-            height={100}
-            width={100}
-            className="rounded-md object-cover select-none h-[200px]"
+            height={200}
+            width={200}
+            className="rounded-md object-cover select-none h-full aspect-square"
             priority
-            data-testid={`carousel-item-${i + 1}`}
           />
         ))}
         {images.length <= 0 && <p>Нету картинки</p>}
@@ -53,7 +75,9 @@ export default function CreatePost() {
           onChange={(e) => setPostText(e.target.value)}
         />
 
-        <Button>Сохранить Пост</Button>
+        <Button onClick={handleSavePost} disabled={isPending}>
+          {isPending ? "Pending" : "Отправить"}
+        </Button>
       </div>
     </div>
   );

@@ -41,7 +41,15 @@ export async function onSubmitProduct(data: ProductInput) {
 
 export async function deleteProduct(id: number) {
   const deleteItem = async (id: number) => {
-    return db.delete(product).where(eq(product.id, id));
+    return db.update(product).set({ active: false }).where(eq(product.id, id));
+  };
+
+  await deleteItem(id).then(() => revalidatePath("/dashboard/products"));
+}
+
+export async function returnProduct(id: number) {
+  const deleteItem = async (id: number) => {
+    return db.update(product).set({ active: true }).where(eq(product.id, id));
   };
 
   await deleteItem(id).then(() => revalidatePath("/dashboard/products"));

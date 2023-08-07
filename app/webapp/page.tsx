@@ -3,7 +3,7 @@ import Catalog from "@/components/catalog";
 import { db } from "@/lib/db";
 import { Products } from "@/types/products";
 import { getCategories } from "./actions";
-import { gt } from "drizzle-orm";
+import { eq, gt } from "drizzle-orm";
 import { product } from "@/lib/db/schema";
 
 export default async function WebAppPage() {
@@ -11,7 +11,7 @@ export default async function WebAppPage() {
     with: {
       category: true,
     },
-    where: gt(product.stock, 0),
+    where: eq(product.active, true),
   })) as Products[];
 
   const categories = await getCategories();

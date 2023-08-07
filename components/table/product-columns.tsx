@@ -92,36 +92,34 @@ export const productColumns: ColumnDef<Products>[] = [
       );
     },
   },
-  {
-    accessorKey: "discount",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Дисконт" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate font-medium">
-            {row.getValue("discount")}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "stock",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="На складе" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate font-medium">
-            {row.getValue("stock")}
-          </span>
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "discount",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Дисконт" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className="flex space-x-2">
+  //         <span className="max-w-[200px] truncate font-medium">
+  //           {row.getValue("discount")}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  // },
+  // {
+  //   accessorKey: "stock",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="На складе" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className="flex space-x-2" hidden>
+  //         <span className="truncate font-medium">{row.getValue("stock")}</span>
+  //       </div>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "createdAt",
     header: ({ column }) => (
@@ -156,9 +154,30 @@ export const productColumns: ColumnDef<Products>[] = [
       );
     },
   },
-
+  {
+    accessorKey: "active",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Активность" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2 justify-center">
+          {row.original.active ? (
+            <Badge className="bg-green-500">Да</Badge>
+          ) : (
+            <Badge className="bg-red-500">Нет</Badge>
+          )}
+        </div>
+      );
+    },
+  },
   {
     id: "actions",
-    cell: ({ row }) => <DataTableRowActions id={row.original.id} />,
+    cell: ({ row }) => (
+      <DataTableRowActions
+        id={row.original.id}
+        active={row.original.active as boolean}
+      />
+    ),
   },
 ];

@@ -6,6 +6,15 @@ import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/table/view-options";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
 }
@@ -16,8 +25,6 @@ export function DataTableToolbar<TData>({
   const isFiltered =
     table.getPreFilteredRowModel().rows.length >
     table.getFilteredRowModel().rows.length;
-
-  // const { data: eduNames } = api.form.getEduNames.useQuery();
 
   return (
     <div className="flex items-center justify-between">
@@ -31,37 +38,33 @@ export function DataTableToolbar<TData>({
           className="h-8 w-[150px] lg:w-[250px]"
         />
 
-        {/* <Select
+        <Select
           value={
-            (table.getColumn("eduName")?.getFilterValue() as string) ??
-            "Выберете учереждение"
+            table.getColumn("active")?.getFilterValue() == true
+              ? "active"
+              : table.getColumn("active")?.getFilterValue() == false
+              ? "inactive"
+              : "none"
           }
           onValueChange={(name) =>
-            table.getColumn("eduName")?.setFilterValue(name)
+            table
+              .getColumn("active")
+              ?.setFilterValue(name == "active" ? true : false)
           }
         >
-          <SelectTrigger className="h-8 w-[250px] text-black lg:w-[350px]">
-            <SelectValue
-              placeholder="Фильтрация по учереждению..."
-              defaultValue="Выберете учереждение"
-            />
+          <SelectTrigger className="h-8 lg:w-[150px]">
+            <SelectValue placeholder="Активность" defaultValue="none" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value={"none"} disabled>
+              Без фильтра
+            </SelectItem>
             <SelectGroup>
-              <SelectItem value="Выберете учереждение" disabled>
-                Выберете учереждение
-              </SelectItem>
-              <Separator />
-              <SelectLabel>Учебные учереждения</SelectLabel>
-
-              {eduNames?.map((item) => (
-                <SelectItem key={item.id} value={item.name as string}>
-                  {item.name}
-                </SelectItem>
-              ))}
+              <SelectItem value={"active"}>Активные</SelectItem>
+              <SelectItem value={"inactive"}>Не активные</SelectItem>
             </SelectGroup>
           </SelectContent>
-        </Select> */}
+        </Select>
 
         {isFiltered && (
           <Button

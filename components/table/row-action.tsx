@@ -11,10 +11,16 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { deleteProduct } from "@/app/dashboard/products/actions";
+import { deleteProduct, returnProduct } from "@/app/dashboard/products/actions";
 import Link from "next/link";
 
-export function DataTableRowActions({ id }: { id: number }) {
+export function DataTableRowActions({
+  id,
+  active,
+}: {
+  id: number;
+  active: boolean;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,15 +36,22 @@ export function DataTableRowActions({ id }: { id: number }) {
         <Link href={`/dashboard/products/edit/${id}`}>
           <DropdownMenuItem>
             <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-            Edit
+            Редактировать
           </DropdownMenuItem>
         </Link>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => deleteProduct(id)}>
-          <Trash className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+        {active ? (
+          <DropdownMenuItem
+            onClick={() => deleteProduct(id)}
+            className="bg-red-700/70"
+          >
+            Спрятать
+          </DropdownMenuItem>
+        ) : (
+          <DropdownMenuItem onClick={() => returnProduct(id)}>
+            Вернуть
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );
