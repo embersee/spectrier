@@ -14,22 +14,22 @@ const keyboard = new Keyboard()
   .text("Каталог")
   .text("Помощь")
   .row()
-  .text("Публичная оферта")
-  .text("Политика конфиденциальности")
-  .row()
+  // .text("Публичная оферта")
+  // .text("Политика конфиденциальности")
+  // .row()
   .text("Связь с оператором")
   .resized()
   .persistent();
 
-const publicPolicy = new InlineKeyboard().webApp(
-  "Открыть",
-  "https://spectrier.vercel.app/policy"
-);
+// const publicPolicy = new InlineKeyboard().webApp(
+//   "Открыть",
+//   "https://spectrier.vercel.app/policy"
+// );
 
-const publicOffer = new InlineKeyboard().webApp(
-  "Открыть",
-  "https://spectrier.vercel.app/public-offer"
-);
+// const publicOffer = new InlineKeyboard().webApp(
+//   "Открыть",
+//   "https://spectrier.vercel.app/public-offer"
+// );
 
 bot.command("start", async (ctx) => {
   console.log(JSON.stringify(ctx.from, null, 4));
@@ -67,27 +67,27 @@ bot.hears("Связь с оператором", async (ctx) => {
   await ctx.reply(botConfig.ru.commands.support);
 });
 
-bot.command("terms", async (ctx) => {
-  await ctx.reply("Публичная оферта ссылка", {
-    reply_markup: publicOffer,
-  });
+// bot.command("terms", async (ctx) => {
+//   await ctx.reply("Публичная оферта ссылка", {
+//     reply_markup: publicOffer,
+//   });
 
-  await ctx.reply("Политика конфиденциальности ссылка", {
-    reply_markup: publicPolicy,
-  });
-});
+//   await ctx.reply("Политика конфиденциальности ссылка", {
+//     reply_markup: publicPolicy,
+//   });
+// });
 
-bot.hears("Публичная оферта", async (ctx) => {
-  await ctx.reply("Публичная оферта ссылка", {
-    reply_markup: publicOffer,
-  });
-});
+// bot.hears("Публичная оферта", async (ctx) => {
+//   await ctx.reply("Публичная оферта ссылка", {
+//     reply_markup: publicOffer,
+//   });
+// });
 
-bot.hears("Политика конфиденциальности", async (ctx) => {
-  await ctx.reply("Политика конфиденциальности ссылка", {
-    reply_markup: publicPolicy,
-  });
-});
+// bot.hears("Политика конфиденциальности", async (ctx) => {
+//   await ctx.reply("Политика конфиденциальности ссылка", {
+//     reply_markup: publicPolicy,
+//   });
+// });
 
 bot.command("catalog", async (ctx) => {
   if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {

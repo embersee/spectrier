@@ -1,7 +1,7 @@
 export default function Policy() {
   return (
     <div className="container">
-      <h1 className="text-3xl">
+      {/* <h1 className="text-3xl">
         Политика конфиденциальности и обработки персональных данных
       </h1>
       <p>
@@ -197,7 +197,7 @@ export default function Policy() {
           конфиденциальности следует сообщать по электронной почте
           orlov-vadim@inbox.ru или по телефонам: +77056142991.
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 }

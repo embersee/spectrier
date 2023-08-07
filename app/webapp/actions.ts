@@ -100,6 +100,8 @@ export async function sendInvoiceToSupport({
     });
   }
 
+  await sendMessageToGroup({ cart, totalSum, comment, address, user: userObj });
+
   return await sendMessageToUser({
     cart,
     totalSum,
@@ -108,6 +110,39 @@ export async function sendInvoiceToSupport({
     user: userObj,
   });
 }
+
+const sendMessageToGroup = async ({
+  cart,
+  totalSum,
+  comment,
+  address,
+  user,
+}: InvoiceToSupportProps) => {
+  const items = cart
+    .map((item) => `${item.quantity} x ${item.name} – ${item.price}\n`)
+    .join("");
+
+  const message = `*Заказ @${user.username}:*
+${items}
+––––––––––––––
+*Итог:* ${totalSum} Тенге
+${
+  comment &&
+  `––––––––––––––
+*комментарий:* ${comment}`
+}
+${
+  address &&
+  `––––––––––––––
+*Адрес доставки:* ${address}`
+}`;
+  const res = await SendTelegram(
+    process.env.NOTIFICATION_GROUP as string,
+    message
+  );
+
+  await res.json();
+};
 
 const sendMessageToUser = async ({
   cart,

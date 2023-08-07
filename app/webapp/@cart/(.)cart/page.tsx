@@ -1,13 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useCartStore } from "@/lib/store";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
@@ -141,7 +135,7 @@ export default function CartPage() {
                 "Через консультанта"
               )}
             </Button>
-            <Button onClick={submitInvoiceToBot} disabled={isPending}>
+            {/* <Button onClick={submitInvoiceToBot} disabled={isPending}>
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -150,15 +144,15 @@ export default function CartPage() {
               ) : (
                 "Через телеграмм"
               )}
-            </Button>
+            </Button> */}
           </div>
           <p className="text-sm text-muted-foreground">
             Через консультанта: наш сотрудник свяжеся с вами насчет оплаты
             заказа.
           </p>
-          <p className="text-sm text-muted-foreground">
+          {/* <p className="text-sm text-muted-foreground">
             Через телеграмм: вам бот отправит запрос на платеж.
-          </p>
+          </p> */}
         </div>
       </DialogContent>
     </Dialog>

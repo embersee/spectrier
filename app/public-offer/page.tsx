@@ -1,7 +1,7 @@
 export default function Public() {
   return (
     <div className="container">
-      <h1 className="text-3xl my-4">
+      {/* <h1 className="text-3xl my-4">
         Политика проведения платежей. Оплата банковской картой онлайн
       </h1>
       <p>
@@ -625,7 +625,7 @@ export default function Public() {
         Алматы, Алатаузский р-н, ул. Сивашская 25 <br /> БИН: 230540014024{" "}
         <br /> р/с в тенге: KZ98722S000024972862 <br /> в банке: AO «Kaspi Bank»{" "}
         <br /> БИК: CASPKZKA
-      </p>
+      </p> */}
     </div>
   );
 }
