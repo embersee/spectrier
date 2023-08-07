@@ -147,7 +147,7 @@ export default function CartPage() {
             </Button> */}
           </div>
           <p className="text-sm text-muted-foreground">
-            Через консультанта: наш сотрудник свяжеся с вами насчет оплаты
+            Через консультанта: наш сотрудник свяжется с вами насчет оплаты
             заказа.
           </p>
           {/* <p className="text-sm text-muted-foreground">

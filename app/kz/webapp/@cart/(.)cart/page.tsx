@@ -135,7 +135,7 @@ export default function CartPage() {
                 "Кеңесші арқылы"
               )}
             </Button>
-            <Button onClick={submitInvoiceToBot} disabled={isPending}>
+            {/* <Button onClick={submitInvoiceToBot} disabled={isPending}>
               {isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -144,15 +144,15 @@ export default function CartPage() {
               ) : (
                 "Телеграмма арқылы"
               )}
-            </Button>
+            </Button> */}
           </div>
           <p className="text-sm text-muted-foreground">
             Кеңесші арқылы: біздің қызметкер тапсырыс үшін төлем туралы сізбен
             хабарласады.
           </p>
-          <p className="text-sm text-muted-foreground">
+          {/* <p className="text-sm text-muted-foreground">
             Telegram арқылы: бот сізге төлем сұрауын жібереді.
-          </p>
+          </p> */}
         </div>
       </DialogContent>
     </Dialog>

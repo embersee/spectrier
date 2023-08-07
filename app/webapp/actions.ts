@@ -122,7 +122,7 @@ const sendMessageToGroup = async ({
     .map((item) => `${item.quantity} x ${item.name} – ${item.price}\n`)
     .join("");
 
-  const message = `*Заказ @${user.username}:*
+  const message = `*Заказ @${user.username || user.telegramId}:*
 ${items}
 ––––––––––––––
 *Итог:* ${totalSum} Тенге
