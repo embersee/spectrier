@@ -9,13 +9,13 @@ import { OPTIONS } from "@/app/api/auth/[...nextauth]/route";
 export default async function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
-  // const session = await getServerSession(OPTIONS);
+  const session = await getServerSession(OPTIONS);
 
-  // const adminIds = process.env.ADMIN_ID as string;
+  const adminIds = process.env.ADMIN_ID as string;
 
-  // if (!adminIds.includes(session?.user?.id as string)) {
-  //   redirect("/");
-  // }
+  if (!adminIds.includes(session?.user?.id as string)) {
+    redirect("/");
+  }
 
   return (
     <>
