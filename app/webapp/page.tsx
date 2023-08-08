@@ -3,7 +3,7 @@ import Catalog from "@/components/catalog";
 import { db } from "@/lib/db";
 import { Products } from "@/types/products";
 import { getCategories } from "./actions";
-import { eq, gt } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { product } from "@/lib/db/schema";
 
 export default async function WebAppPage() {

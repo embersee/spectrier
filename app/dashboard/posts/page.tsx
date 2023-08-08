@@ -1,7 +1,7 @@
+import SendPostModal from "@/components/send-post-modal";
 import { DataTable } from "@/components/table/data-table";
 import { postColumns } from "@/components/table/post-columns";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { db } from "@/lib/db";
 import Link from "next/link";
 
@@ -14,10 +14,11 @@ export default async function ViewPosts() {
           Все посты
         </h1>
         <Link href={"/dashboard/posts/create"}>
-          <Button>Создать</Button>
+          <Button variant="secondary">Создать</Button>
         </Link>
       </div>
       <DataTable data={posts} columns={postColumns} />
+      <SendPostModal />
     </>
   );
 }

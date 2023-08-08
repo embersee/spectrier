@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { storeProduct } from "@/types/products";
+import { Post } from "./db/schema";
 
 // Define the interface of the Cart state
 interface State {
@@ -78,5 +79,30 @@ export const useCartStore = create<State & Actions>((set, get) => ({
       totalItems: state.totalItems - 1,
       totalPrice: state.totalPrice - storeProduct.price,
     }));
+  },
+}));
+
+interface PostState {
+  isPostOpen: boolean;
+  postData: Post | undefined;
+}
+
+interface PostAction {
+  OpenPostModal: () => void;
+  setPostData: (post: Post) => void;
+}
+
+export const usePostModal = create<PostState & PostAction>((set, get) => ({
+  isPostOpen: false,
+  postData: undefined,
+  OpenPostModal: () => {
+    const isOpen = get().isPostOpen;
+
+    set((state) => ({
+      isPostOpen: !isOpen,
+    }));
+  },
+  setPostData: (post: Post) => {
+    set((state) => ({ postData: post }));
   },
 }));

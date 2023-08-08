@@ -146,12 +146,15 @@ export const postColumns: ColumnDef<Post>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => (
-      <PostRowActions
-        id={row.original.id}
-        active={row.original.active as boolean}
-      />
-    ),
+    cell: ({ row }) => {
+      return (
+        <PostRowActions
+          id={row.original.id}
+          active={row.original.active as boolean}
+          postData={row.original}
+        />
+      );
+    },
     enableSorting: false,
     enableHiding: false,
   },

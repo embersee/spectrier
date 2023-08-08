@@ -13,14 +13,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { deletePost, returnPost } from "@/app/dashboard/posts/actions";
+import { usePostModal } from "@/lib/store";
+import { Post } from "@/lib/db/schema";
 
 export function PostRowActions({
   id,
   active,
+  postData,
 }: {
   id: number;
   active: boolean;
+  postData: Post;
 }) {
+  const openModal = usePostModal((state) => state.OpenPostModal);
+  const setPostData = usePostModal((state) => state.setPostData);
+
+  const sendModal = () => {
+    setPostData(postData);
+    openModal();
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -35,12 +46,12 @@ export function PostRowActions({
       <DropdownMenuContent align="end" className="w-[160px]">
         {active ? (
           <>
-            <Link href={`/dashboard/posts/send/${id}`}>
-              <DropdownMenuItem>
-                <PlaneTakeoff className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-                Отправить...
-              </DropdownMenuItem>
-            </Link>
+            {/* <Link href={`/dashboard/posts/send/${id}`}> */}
+            <DropdownMenuItem onClick={sendModal}>
+              <PlaneTakeoff className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
+              Отправить...
+            </DropdownMenuItem>
+            {/* </Link> */}
             {/* <Link href={`/dashboard/posts/edit/${id}`}>
               <DropdownMenuItem>
                 <Pen className="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
