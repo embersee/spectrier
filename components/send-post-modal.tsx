@@ -48,6 +48,8 @@ export default function SendPostModal() {
       setDestination(session.data?.user.id as string);
     }
 
+    console.log(`${destination} ${postData.postText}`);
+
     startTransition(() => {
       sendPost(postData, destination)
         .then((res) => setRes(res))
