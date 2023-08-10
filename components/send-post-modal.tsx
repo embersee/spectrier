@@ -44,10 +44,9 @@ export default function SendPostModal() {
       return;
     }
 
-    // if( destination == "self") {
-    //   setDestination(session.data?.user.id as string)
-    // }
-    // #FIXME:
+    if (destination == "self") {
+      setDestination(session.data?.user.id as string);
+    }
 
     startTransition(() => {
       sendPost(postData, destination)

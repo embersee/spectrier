@@ -29,24 +29,19 @@ export async function returnPost(id: number) {
 export async function sendPost(postData: Post, destination: string) {
   try {
     if (destination == "" || destination == "none" || postData == undefined)
-      return "Failed to submit";
+      throw "Failed to submit";
 
-    const date = new Date().toString();
     if (destination != "all") {
-      const res = await SendTelegram(
-        // session?.user.id as string,
-        "1019210352",
-        postData.postText
-      );
+      const res = await SendTelegram(destination, postData.postText);
       console.log(res);
       if (res.status == 400) {
-        throw "status: 400 ";
+        throw "Telegram failed submit";
       }
       return `Status:${res.status} sent to ${destination}`;
     }
 
     throw "error";
   } catch (error) {
-    return "error";
+    return String(error);
   }
 }
