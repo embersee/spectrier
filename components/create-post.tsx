@@ -38,7 +38,10 @@ export default function CreatePost() {
       savePost({
         postText,
         postImageURL: images.at(0)?.fileUrl as string,
-      }).then(() => router.back());
+      }).then(() => {
+        router.refresh();
+        router.push("/dashboard/posts");
+      });
     });
   };
 

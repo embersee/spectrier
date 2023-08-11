@@ -48,10 +48,6 @@ export default function SendPostModal() {
       setDestination(session.data?.user.id as string);
     }
 
-    // console.log(`session: ${JSON.stringify(session)}`);
-
-    // console.log(`${destination} ${postData.postText}`);
-
     startTransition(() => {
       sendPost(
         postData,

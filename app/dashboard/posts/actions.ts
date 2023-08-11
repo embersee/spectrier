@@ -32,9 +32,8 @@ export async function sendPost(postData: Post, destination: string) {
       throw "Failed to submit";
 
     if (destination != "all") {
-      console.log(JSON.stringify({ destination, postData }));
       const res = await SendTelegram(destination, postData.postText);
-      console.log(res);
+      console.log(JSON.stringify({ destination, postData, res }));
       if (res.status == 400) {
         throw "Telegram failed submit";
       }
