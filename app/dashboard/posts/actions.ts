@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import { NewPost, Post, post } from "@/lib/db/schema";
-import { SendTelegram } from "@/lib/sendTelegram";
+import { SendTelegram, SendTelegramPhoto } from "@/lib/sendTelegram";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -32,7 +32,11 @@ export async function sendPost(postData: Post, destination: string) {
       throw "Failed to submit";
 
     if (destination != "all") {
-      const res = await SendTelegram(destination, postData.postText);
+      const res = await SendTelegramPhoto(
+        destination,
+        postData.postText,
+        postData.postImageURL
+      );
       console.log(JSON.stringify({ destination, postData, res }));
       if (res.status == 400) {
         throw "Telegram failed submit";
