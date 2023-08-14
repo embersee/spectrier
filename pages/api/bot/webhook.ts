@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { order } from "@/lib/db/schema";
 import { InvoicePayload } from "@/types/invoice-payload";
 import { eq } from "drizzle-orm";
-import { Bot, InlineKeyboard, Keyboard, webhookCallback } from "grammy";
+import { Bot, Keyboard, webhookCallback } from "grammy";
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN is unset");
@@ -32,7 +32,9 @@ const keyboard = new Keyboard()
 // );
 
 bot.command("start", async (ctx) => {
-  console.log(JSON.stringify(ctx.from, null, 4));
+  console.log(JSON.stringify(ctx, null, 4));
+
+  console.log(`Payload: ${ctx.match}`);
 
   if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
     return await ctx.reply(botConfig.kk.commands.start);
