@@ -7,6 +7,7 @@ import { DataTableColumnHeader } from "@/components/table/column-header";
 import { Badge } from "../ui/badge";
 
 import { Link } from "@/lib/db/schema";
+import { LinkRowActions } from "./link-row-actions";
 
 export const linkColumns: ColumnDef<Link>[] = [
   {
@@ -125,18 +126,18 @@ export const linkColumns: ColumnDef<Link>[] = [
       );
     },
   },
-  // {
-  //   id: "actions",
-  //   cell: ({ row }) => {
-  //     return (
-  //       <PostRowActions
-  //         id={row.original.id}
-  //         active={row.original.active as boolean}
-  //         postData={row.original}
-  //       />
-  //     );
-  //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
+  {
+    id: "actions",
+    cell: ({ row }) => {
+      return (
+        <LinkRowActions
+          id={row.original.id}
+          active={row.original.active as boolean}
+          linkData={row.original}
+        />
+      );
+    },
+    enableSorting: false,
+    enableHiding: false,
+  },
 ];
