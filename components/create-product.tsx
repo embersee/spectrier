@@ -98,154 +98,184 @@ export default function CreateProductForm({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex space-x-2 justify-center items-center ">
-          {images.length <= 0 && <Upload setImages={setImages} />}
+        <div className="flex">
+          <div className="flex space-x-2 justify-center items-center ">
+            {images.length <= 0 && <Upload setImages={setImages} />}
 
-          <div>
-            <Carousel show={1} infiniteLoop withIndicator>
-              {images.map((img, i) => (
-                <Image
-                  key={i}
-                  src={img.fileUrl || ""}
-                  alt={""}
-                  height={100}
-                  width={100}
-                  className="rounded-md object-cover select-none h-[200px]"
-                  priority
-                  data-testid={`carousel-item-${i + 1}`}
-                />
-              ))}
-            </Carousel>
+            <div>
+              <Carousel show={1} infiniteLoop withIndicator>
+                {images.map((img, i) => (
+                  <Image
+                    key={i}
+                    src={img.fileUrl || ""}
+                    alt={""}
+                    height={100}
+                    width={100}
+                    className="rounded-md object-cover select-none h-[200px]"
+                    priority
+                    data-testid={`carousel-item-${i + 1}`}
+                  />
+                ))}
+              </Carousel>
+            </div>
           </div>
-        </div>
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-2 flex-col flex"
-          >
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Название товара</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="до 256 символа" />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Описание товара</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="до 256 символа" />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Категория</FormLabel>
-                  <Select onValueChange={field.onChange}>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-2 flex-col flex"
+            >
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Название товара</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Выберете категорию" />
-                      </SelectTrigger>
+                      <Input {...field} placeholder="до 256 символа" />
                     </FormControl>
-                    <SelectContent>
-                      {categories.map((category, i) => (
-                        <SelectItem key={i} value={category.id.toString()}>
-                          {category.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Цена</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      placeholder="числовое значение, не меньше 0, без дробей"
-                    />
-                  </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="nameKZ"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Название товара</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="до 256 символа" />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="discount"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Дисконт</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      placeholder="числовое значение, не меньше 0, без дробей"
-                    />
-                  </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Описание товара KZ</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="до 256 символа" />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Кол. на складе</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      {...field}
-                      placeholder="числовое значение, не меньше 0, без дробей"
-                    />
-                  </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="descriptionKZ"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Описание товара KZ</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="до 256 символа" />
+                    </FormControl>
 
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <p className="text-sm text-muted-foreground">
-              Если кол. на складе меньше 0 то не будет отображатся в каталоге на
-              продажу
-            </p>
-            <DialogFooter>
-              <Button
-                type="submit"
-                className="self-end mt-8"
-                disabled={isPending}
-              >
-                {isPending ? "Pending" : "Submit"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Категория</FormLabel>
+                    <Select onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Выберете категорию" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((category, i) => (
+                          <SelectItem key={i} value={category.id.toString()}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Цена</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        placeholder="числовое значение, не меньше 0, без дробей"
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="discount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Дисконт</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        placeholder="числовое значение, не меньше 0, без дробей"
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="stock"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Кол. на складе</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        {...field}
+                        placeholder="числовое значение, не меньше 0, без дробей"
+                      />
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <p className="text-sm text-muted-foreground">
+                Если кол. на складе меньше 0 то не будет отображатся в каталоге
+                на продажу
+              </p>
+              <DialogFooter>
+                <Button
+                  type="submit"
+                  className="self-end mt-8"
+                  disabled={isPending}
+                >
+                  {isPending ? "Pending" : "Submit"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -30,7 +30,9 @@ export const categoryRelations = relations(category, ({ many }) => ({
 export const product = pgTable("product", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
+  nameKZ: text("nameKZ").notNull().default(""),
   description: text("description").notNull(),
+  descriptionKZ: text("descriptionKZ").notNull().default(""),
   price: integer("price").notNull(),
   discount: integer("discount").notNull(),
   stock: integer("stock").notNull(),

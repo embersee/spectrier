@@ -17,7 +17,9 @@ interface ProductInput extends ProductForm {
 export async function onSubmitProduct(data: ProductInput) {
   const NewProduct: NewProduct = {
     name: data.name,
+    nameKZ: data.nameKZ,
     description: data.description,
+    descriptionKZ: data.descriptionKZ,
     categoryID: Number(data.category),
     price: data.price,
     discount: data.discount,
@@ -79,7 +81,9 @@ export async function updateProduct(data: ProductFormUpdate) {
   const Product: NewProduct = {
     id: data.id,
     name: data.name,
+    nameKZ: data.nameKZ,
     description: data.description,
+    descriptionKZ: data.descriptionKZ,
     categoryID: Number(data.category),
     price: data.price,
     discount: data.discount,

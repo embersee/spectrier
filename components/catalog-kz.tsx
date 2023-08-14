@@ -1,6 +1,5 @@
 "use client";
 
-import { ItemCard } from "./item-card";
 import { Products } from "@/types/products";
 
 import { useEffect, useState } from "react";

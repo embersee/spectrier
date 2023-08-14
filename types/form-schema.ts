@@ -4,7 +4,9 @@ export const productSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  nameKZ: z.string().optional(),
   description: z.string(),
+  descriptionKZ: z.string().optional(),
   category: z.string(),
   price: z.coerce.number().min(1),
   discount: z.coerce.number().min(0),
@@ -16,7 +18,9 @@ export const productUpdateSchema = z.object({
   name: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
+  nameKZ: z.string().optional(),
   description: z.string(),
+  descriptionKZ: z.string().optional(),
   category: z.string(),
   price: z.coerce.number().min(1),
   discount: z.coerce.number().min(0),

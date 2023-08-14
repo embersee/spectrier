@@ -97,11 +97,11 @@ export default function PreviewItemKZ({
           <div className=" w-full">
             <div className="flex flex-col p-4 ">
               <div className="flex justify-between text-2xl font-semibold">
-                <p>{product?.name}</p>
+                <p>{product?.nameKZ}</p>
                 <p>{product?.price} ₸</p>
               </div>
               <DialogDescription className=" text-left">
-                {product?.description}
+                {product?.descriptionKZ}
               </DialogDescription>
 
               <p className="text-sm text-muted-foreground text-left">

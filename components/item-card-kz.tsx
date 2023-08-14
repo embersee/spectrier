@@ -67,7 +67,7 @@ export function ItemCardKZ({
         </AspectRatio>
       </CardContent>
       <CardHeader className="p-2 pb-0 flex">
-        <CardTitle>{product.name}</CardTitle>
+        <CardTitle>{product.nameKZ}</CardTitle>
         <h3>{product.price} ₸</h3>
       </CardHeader>
       <CardFooter className="p-2 space-x-2">

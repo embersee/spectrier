@@ -47,6 +47,21 @@ export const productColumns: ColumnDef<Products>[] = [
     },
   },
   {
+    accessorKey: "nameKZ",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Назавние KZ" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[200px] truncate font-medium">
+            {row.getValue("nameKZ")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "description",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Описание" />
@@ -56,6 +71,21 @@ export const productColumns: ColumnDef<Products>[] = [
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
             {row.getValue("description")}
+          </span>
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "descriptionKZ",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Описание KZ" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[200px] truncate font-medium">
+            {row.getValue("descriptionKZ")}
           </span>
         </div>
       );
