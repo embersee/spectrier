@@ -1,6 +1,6 @@
 import { botConfig } from "@/config/bot";
 import { db } from "@/lib/db";
-import { link, order } from "@/lib/db/schema";
+import { link, order, user } from "@/lib/db/schema";
 import { InvoicePayload } from "@/types/invoice-payload";
 import { eq } from "drizzle-orm";
 import { Bot, Keyboard, webhookCallback } from "grammy";
@@ -32,10 +32,6 @@ const keyboard = new Keyboard()
 // );
 
 bot.command("start", async (ctx) => {
-  console.log(JSON.stringify(ctx, null, 4));
-
-  console.log(`Payload: ${ctx.match}`);
-
   if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
     return await ctx.reply(botConfig.kk.commands.start);
   }
@@ -55,6 +51,13 @@ bot.command("start", async (ctx) => {
       .update(link)
       .set({ reponses: found.reponses + 1 })
       .where(eq(link.code, found.code));
+
+    await db.insert(user).values({
+      name:
+        ctx.message?.from.first_name || "" + ctx.message?.from.last_name || "",
+      telegramId: ctx.message?.from.id.toString() || "",
+      username: ctx.message?.from.username || "",
+    });
   }
 });
 
