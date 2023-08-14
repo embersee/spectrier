@@ -1,6 +1,6 @@
 import { botConfig } from "@/config/bot";
 import { db } from "@/lib/db";
-import { order } from "@/lib/db/schema";
+import { link, order } from "@/lib/db/schema";
 import { InvoicePayload } from "@/types/invoice-payload";
 import { eq } from "drizzle-orm";
 import { Bot, Keyboard, webhookCallback } from "grammy";
@@ -43,6 +43,19 @@ bot.command("start", async (ctx) => {
   await ctx.reply(botConfig.ru.commands.start, {
     reply_markup: keyboard,
   });
+
+  if (ctx.match.length) {
+    const found = await db.query.link.findFirst({
+      where: eq(link.code, ctx.match),
+    });
+
+    if (!found) return;
+
+    await db
+      .update(link)
+      .set({ reponses: found.reponses + 1 })
+      .where(eq(link.code, found.code));
+  }
 });
 
 bot.command("help", async (ctx) => {

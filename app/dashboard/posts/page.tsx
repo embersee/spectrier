@@ -11,7 +11,7 @@ export default async function ViewPosts() {
     <>
       <div className="flex space-x-4">
         <h1 className="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">
-          Все посты
+          Посты
         </h1>
         <Link href={"/dashboard/posts/create"}>
           <Button variant="secondary">Создать</Button>

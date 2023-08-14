@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { storeProduct } from "@/types/products";
-import { Post } from "./db/schema";
+import { Link, Post } from "./db/schema";
 
 // Define the interface of the Cart state
 interface State {
@@ -104,5 +104,30 @@ export const usePostModal = create<PostState & PostAction>((set, get) => ({
   },
   setPostData: (post: Post) => {
     set((state) => ({ postData: post }));
+  },
+}));
+
+interface LinkState {
+  isLinkOpen: boolean;
+  linkData: Link | undefined;
+}
+
+interface LinkAction {
+  OpenLinkModal: () => void;
+  setLinkData: (link: Link) => void;
+}
+
+export const useLinkModal = create<LinkState & LinkAction>((set, get) => ({
+  isLinkOpen: false,
+  linkData: undefined,
+  OpenLinkModal: () => {
+    const isOpen = get().isLinkOpen;
+
+    set((state) => ({
+      isLinkOpen: !isOpen,
+    }));
+  },
+  setLinkData: (link: Link) => {
+    set((state) => ({ linkData: link }));
   },
 }));

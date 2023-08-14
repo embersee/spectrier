@@ -28,5 +28,16 @@ export const productUpdateSchema = z.object({
   imageFive: z.string().nullish().default(""),
 });
 
+export const linkSchema = z.object({
+  name: z.string().min(3, {
+    message: "Link name must be at least 3 characters.",
+  }),
+  code: z.string().min(4, {
+    message: "Code must be at least 4 characters long.",
+  }),
+});
+
+export type LinkForm = z.infer<typeof linkSchema>;
+
 export type ProductFormUpdate = z.infer<typeof productUpdateSchema>;
 export type ProductForm = z.infer<typeof productSchema>;

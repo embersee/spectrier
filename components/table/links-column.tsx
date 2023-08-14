@@ -6,10 +6,9 @@ import { DataTableColumnHeader } from "@/components/table/column-header";
 
 import { Badge } from "../ui/badge";
 
-import { Post } from "@/lib/db/schema";
-import { PostRowActions } from "./post-row-action";
+import { Link } from "@/lib/db/schema";
 
-export const postColumns: ColumnDef<Post>[] = [
+export const linkColumns: ColumnDef<Link>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -63,55 +62,45 @@ export const postColumns: ColumnDef<Post>[] = [
     },
   },
   {
-    accessorKey: "postText",
+    accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Текст" />
+      <DataTableColumnHeader column={column} title="Имя" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            {row.original.postText}
+            {row.original.name}
           </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "postImageURL",
+    accessorKey: "code",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Картинка" />
+      <DataTableColumnHeader column={column} title="Код" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            <a
-              href={row.original.postImageURL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Посмотреть
-            </a>
+            {row.original.code}
           </span>
         </div>
       );
     },
   },
   {
-    accessorKey: "sent",
+    accessorKey: "responses",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Отправилено?" />
+      <DataTableColumnHeader column={column} title="Откликов" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
           <span className="max-w-[200px] truncate font-medium">
-            {row.original.sent ? (
-              <Badge className="bg-green-500">Да</Badge>
-            ) : (
-              <Badge className="bg-red-500">Нет</Badge>
-            )}
+            {row.original.reponses}
           </span>
         </div>
       );
@@ -136,18 +125,18 @@ export const postColumns: ColumnDef<Post>[] = [
       );
     },
   },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <PostRowActions
-          id={row.original.id}
-          active={row.original.active as boolean}
-          postData={row.original}
-        />
-      );
-    },
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: "actions",
+  //   cell: ({ row }) => {
+  //     return (
+  //       <PostRowActions
+  //         id={row.original.id}
+  //         active={row.original.active as boolean}
+  //         postData={row.original}
+  //       />
+  //     );
+  //   },
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
 ];

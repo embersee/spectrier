@@ -138,6 +138,15 @@ export const post = pgTable("post", {
   active: boolean("active").default(true),
 });
 
+export const link = pgTable("link", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  code: text("code").notNull(),
+  createdAt: date("createdAt").notNull().defaultNow(),
+  active: boolean("active").default(true),
+  reponses: integer("responses").notNull().default(0),
+});
+
 export type User = InferModel<typeof user>;
 export type NewUser = InferModel<typeof user, "insert">;
 
@@ -154,3 +163,6 @@ export type NewProductsToOrders = InferModel<typeof productsToOrders, "insert">;
 
 export type Post = InferModel<typeof post>;
 export type NewPost = InferModel<typeof post, "insert">;
+
+export type Link = InferModel<typeof link>;
+export type NewLink = InferModel<typeof link, "insert">;
