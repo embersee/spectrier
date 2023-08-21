@@ -33,9 +33,15 @@ const keyboard = new Keyboard()
 
 bot.command("start", async (ctx) => {
   if (ctx.from?.language_code?.toLocaleLowerCase() == "kk") {
+    await ctx.replyWithPhoto(
+      "https://utfs.io/f/a9bdcc6f-8b45-48af-a9ac-cc784c28e542_2023-08-21%2013.40.35.jpg"
+    );
     return await ctx.reply(botConfig.kk.commands.start);
   }
 
+  await ctx.replyWithPhoto(
+    "https://utfs.io/f/a9bdcc6f-8b45-48af-a9ac-cc784c28e542_2023-08-21%2013.40.35.jpg"
+  );
   await ctx.reply(botConfig.ru.commands.start, {
     reply_markup: keyboard,
   });
