@@ -9,11 +9,20 @@
 
 // export const db = drizzle(connection, { schema });
 
-import { drizzle, PostgresJsDatabase } from "drizzle-orm/postgres-js";
-import * as schema from "./schema";
-import postgres from "postgres";
+// import { drizzle } from "drizzle-orm/postgres-js";
+// import * as schema from "./schema";
+// import postgres from "postgres";
 
-const queryClient = postgres(`${process.env.DATABASE_URL}`, {
-  ssl: "require",
-});
-export const db = drizzle(queryClient, { schema });
+// const queryClient = postgres(`${process.env.DATABASE_URL}`, {
+//   ssl: "require",
+// });
+// export const db = drizzle(queryClient, { schema });
+
+import { neon, neonConfig } from "@neondatabase/serverless";
+import * as schema from "./schema";
+import { drizzle } from "drizzle-orm/neon-http";
+
+neonConfig.fetchConnectionCache = true;
+
+const sql = neon(process.env.DATABASE_URL!);
+export const db = drizzle(sql, { schema });
