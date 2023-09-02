@@ -152,4 +152,8 @@ bot.on("message:successful_payment", async (ctx) => {
   return ctx.reply(botConfig.ru.commands.success);
 });
 
+export const config = {
+  runtime: "edge",
+};
+
 export default webhookCallback(bot, "next-js");
