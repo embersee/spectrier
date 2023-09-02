@@ -1,11 +1,8 @@
 import "@/styles/globals.css";
 import { Metadata } from "next";
-import { TailwindIndicator } from "@/components/tailwind-indicator";
-import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
-import { fontSans } from "@/lib/fonts";
-import { cn } from "@/lib/utils";
 
+export const runtime = "edge";
 export const revalidate = 60; // revalidate this page every 60 seconds
 
 export const metadata: Metadata = {
@@ -25,7 +22,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WebAppLayout({ children, cart, preview }: WebAppLayoutProps) {
+export default function WebAppLayout({
+  children,
+  cart,
+  preview,
+}: WebAppLayoutProps) {
   return (
     <>
       {children}
