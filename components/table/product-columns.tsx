@@ -150,40 +150,40 @@ export const productColumns: ColumnDef<Products>[] = [
   //     );
   //   },
   // },
-  {
-    accessorKey: "createdAt",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Создано" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate font-medium">
-            {(row.getValue("createdAt") as Date).toLocaleDateString("ru-RU")}
-          </span>
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "updatedAt",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Обновлено" />
-    ),
-    cell: ({ row }) => {
-      const updatedAt = row.getValue("updatedAt") as Date;
+  // {
+  //   accessorKey: "createdAt",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Создано" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     return (
+  //       <div className="flex space-x-2">
+  //         <span className="max-w-[200px] truncate font-medium">
+  //           {(row.getValue("createdAt") as Date).toLocaleDateString("ru-RU")}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  // },
+  // {
+  //   accessorKey: "updatedAt",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Обновлено" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     const updatedAt = row.getValue("updatedAt") as Date;
 
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[200px] truncate font-medium">
-            {updatedAt
-              ? updatedAt.toLocaleDateString("ru-RU")
-              : "Не обновлялся"}
-          </span>
-        </div>
-      );
-    },
-  },
+  //     return (
+  //       <div className="flex space-x-2">
+  //         <span className="max-w-[200px] truncate font-medium">
+  //           {updatedAt
+  //             ? updatedAt.toLocaleDateString("ru-RU")
+  //             : "Не обновлялся"}
+  //         </span>
+  //       </div>
+  //     );
+  //   },
+  // },
   {
     accessorKey: "active",
     header: ({ column }) => (
