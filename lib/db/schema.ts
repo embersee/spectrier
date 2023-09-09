@@ -1,4 +1,4 @@
-import { InferModel, relations } from "drizzle-orm";
+import { InferModel, InferSelectModel, relations } from "drizzle-orm";
 import {
   pgTable,
   serial,
@@ -148,8 +148,8 @@ export const link = pgTable("link", {
   active: boolean("active").default(true),
   reponses: integer("responses").notNull().default(0),
 });
-
-export type User = InferModel<typeof user>;
+// FIXME: update drizzle type deprication from InferModal to InferSelectModel
+export type User = InferSelectModel<typeof user>;
 export type NewUser = InferModel<typeof user, "insert">;
 
 export type Category = InferModel<typeof category>;
